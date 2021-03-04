@@ -1,8 +1,8 @@
 #include <Arduino.h>
 //#include <SoftwareSerial.h>
-#include<ArduinoRS485.h>
 #include<ros.h>
 #include <std_msgs/UInt16.h>
+#include <arm_subscriber/arm_msg.h>
 #include "macros.h"
 #include "functions.h"
 extern IntervalTimer encoderTimer;
@@ -21,11 +21,9 @@ uint16_t lowByte;
 uint16_t highByte;
 uint16_t resolutionShift;
 
-extern std_msgs::UInt16 wristElbow;
+extern arm_subscriber::arm_msg wristElbow;
 extern ros::Publisher pub;
-
-
-int byteOut[4]={WRIST, ELBOW, SHOULDER, HIP};
+ char byteOut[4]={WRIST, ELBOW, SHOULDER, HIP};
 
 
 extern boolean isr_flag;
@@ -39,18 +37,13 @@ int encoderNodeCounter = INIT; //test
 
 
 void rs485_init(void){
-  //Serial.begin(9600); //NEED TO TURN OFF IF USING ROS
-  encoderTimer.begin(pollEncoder,ENCODER_TIME_POLL);
- // while (!Serial) {
-     // wait for serial port to connect. Needed for native USB port only
- //}
-  //Serial.println("Serial ready for transmitting");
-   
+
+  encoderTimer.begin(pollEncoder,ENCODER_TIME_POLL); //Move this so that it will 
+                                                     //be triggered by a subscriber talking to theTeensy
   pinMode(Pin13LED, OUTPUT);   
   pinMode(Re, OUTPUT);
   pinMode(De, OUTPUT);   
  
-  //digitalWrite(RxTx, Receive);   //Initialize transciever to receive data
   RS485Receive_EN(); 
 
   Serial1.begin(115200, SERIAL_8N1);        // set the data rate
@@ -93,22 +86,28 @@ void pollEncoder(void)
 
 
 void RS485Transmit_Addr(void){
+  char swamp;
+   if (ENCODERS_CYCLED){
+      nh.logwarn("CYCLED");
+      encoderNodeCounter = INIT;
+    }
+    
   if ((encoderFlag)&&(transStatus==INIT))
   {
-    //Serial.println("Sent");           //Serial indicator
     nh.loginfo("RS485_TX");
-    //byteOut = Serial.read;          //Locally store the transmitted string
-    //Serial.println(byteOut[counter]);
+    
     RS485Transmit_EN();
     Serial1.write(byteOut[encoderNodeCounter]);      // Send byte to encoder
+    (byteOut[encoderNodeCounter]);
+    wristElbow.joint = byteOut[encoderNodeCounter];
     encoderNodeCounter++; //Increment node address array
-    if (ENCODERS_CYCLED)
-      encoderNodeCounter = INIT;
+
+   
 
     digitalWrite(Pin13LED, LOW);      // Off momentarily
     delay(10);
     RS485Receive_EN();
-    delay(50);
+    delay(10);
     
 
     encoderFlag = false;
@@ -122,51 +121,42 @@ void RS485Receive_Pos(void){
 
   if (Serial1.available()&&(transStatus!=TRANS_END))       //Look for data from encoder
    {
-     
-    //Serial.println("Received");
     nh.loginfo("RS485_RX");
     digitalWrite(Pin13LED, LOW);        // Off momentarily
     byteIn = Serial1.read();     // Read received byte
-    //Serial.println(byteIn);
-    delay(10);
+    //delay(10);
 
     switch (transStatus) //Parses through receiving bytes
     {
-    case RXBACK:
-      rxByte = byteIn;
-     // Serial.println(rxByte, BIN); //What we sent
-      break;
+        case RXBACK:
+          rxByte = byteIn;
+          break;
 
-    case LOWBYTE:
-      lowByte = byteIn; // The Low end of the countsT
-       //Serial.println("LowByte");
-       //Serial.println(lowByte,BIN);
-       //nh.logwarn("did it");
-    
-    
-      //Serial.println(lowByte, BIN);
+        case LOWBYTE:
+          lowByte = byteIn; // The Low end of the countsT
+          break;
 
-      break;
+        case HIGHBYTE:
+          highByte = byteIn; 
+          data = word(highByte, lowByte);
+          data = data & HIGHBYTE_MASK; //Gets rid of top 2 checksum bits
+         // wristElbow.data = data >> SHIFT_RES;
+          wristElbow.data = data;
+          break;
 
-    case HIGHBYTE:
-      highByte = byteIn; 
-       data = word(highByte, lowByte);
-      data = data & HIGHBYTE_MASK; //Gets rid of top 2 checksum bits
-      wristElbow.data = data >> SHIFT_RES;
-     
-      break;
+          default:
+          break;
 
-
-    default:
-      break;
     }
-    transStatus++;
-      if (PUBLISH){
-      nh.logwarn("CONCAT");
-      pub.publish(&wristElbow);
-      nh.spinOnce();
-      delay(10);
-      }
+       transStatus++;
+
+       
+        /* if (PUBLISH){
+          nh.logwarn("CONCAT");
+          pub.publish(&wristElbow);
+          nh.spinOnce();
+          delay(10);
+        } */
   }
 
 else transStatus = INIT;

@@ -10,8 +10,9 @@
 #define RXBACK 0
 #define LOWBYTE 1
 #define HIGHBYTE 2
+#define PUBLISH_ENCODER 3
 #define PUBLISH transStatus == 3
-#define TRANS_END 4
+#define TRANS_END 3
 
 #define SHIFT_RES 2
 
@@ -19,7 +20,7 @@
 
 #define HIGHBYTE_MASK 16383
 
-#define ENCODER_TIME_POLL 100000
+#define ENCODER_TIME_POLL 1000
 
 
 //#define RxTx 3
@@ -31,10 +32,10 @@
 
 #define Pin13LED         13
 
-#define WRIST       0x54
-#define ELBOW       0x50
-#define SHOULDER    0x58
-#define HIP         0x4C
+#define WRIST       'T' //0x50
+#define ELBOW       'P' //0x54
+#define SHOULDER    'X' //0x58
+#define HIP         'L' //0x4C
 #define ENCODERS_CYCLED encoderNodeCounter == 4
 
 

@@ -1,26 +1,16 @@
 #include <Arduino.h>
 //#include <SoftwareSerial.h>
 #include <ros.h>
-#include <ArduinoRS485.h>
 #include <std_msgs/UInt16.h>
+#include <arm_subscriber/arm_msg.h>
 #include "macros.h"
 #include "functions.h"
 
 
-std_msgs::UInt16 wristElbow;
+arm_subscriber::arm_msg wristElbow;
 ros::NodeHandle  nh;
 ros::Publisher pub("teensy_feedback", &wristElbow);
 
-
-/* uint16_t byteIn;
-uint16_t byteJetson;
-uint8_t rxByte;
-//uint16_t lowByte;
-uint16_t data;
-uint16_t lowByte;
-uint16_t highByte;
-uint16_t resolutionShift; */
-//unsigned int wristElbow;
 int transStatus;
 bool published = true;
 volatile extern bool encoderFlag;
@@ -32,9 +22,12 @@ IntervalTimer encoderTimer;
 void setup()   /****** SETUP: RUNS ONCE ******/
 {
 
-  rs485_init(); // RS485 pin config and serial init
+
   ros_init();   // setup ROS node handle, topic interfaces and parameters
+  rs485_init(); // RS485 pin config and serial init
   
+
+
 }
 
 
@@ -57,6 +50,13 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
   
   RS485Receive_Pos();
  
+
+ if (PUBLISH){
+          nh.logwarn("CONCAT");
+          pub.publish(&wristElbow);
+          nh.spinOnce();
+          delay(10);
+        }
   
    
 }
