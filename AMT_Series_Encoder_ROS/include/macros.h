@@ -2,6 +2,7 @@
 #ifndef MACROS_H_
 #define MACROS_H_
 
+
 //MACROS FOR PINS TAKEN ON TEENSY
 
 #define RX        0  //These two pins are for the RS-485 
@@ -57,6 +58,6 @@
 #define Ki 10
 #define Kd 0 */
 
-
+#define ARM_DOF 4
 
 #endif /* MACROS_H_ */
