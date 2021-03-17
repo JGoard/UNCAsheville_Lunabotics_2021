@@ -1,7 +1,5 @@
 #include <Arduino.h>
-//#include <SoftwareSerial.h>
 #include<ros.h>
-#include <std_msgs/UInt16.h>
 #include <arm_subscriber/arm_msg.h>
 #include "macros.h"
 #include "functions.h"

@@ -1,13 +1,8 @@
 #include <Arduino.h>
-//#include <SoftwareSerial.h>
 #include <ros.h>
-#include <std_msgs/UInt16.h>
 #include <arm_subscriber/arm_msg.h>
 #include "macros.h"
 #include "functions.h"
-#include <PID_v1.h>
-#include <PID_AutoTune_v0.h>
-
 
 arm_subscriber::arm_msg wristElbow;
 ros::NodeHandle  nh;
@@ -20,16 +15,8 @@ unsigned long int currentMillis;
 
 IntervalTimer encoderTimer;
 
-boolean tuning = true;
-byte ATuneModeRemember=2;
-
-
-double aTuneStep=10, aTuneNoise=1, aTuneStartValue=30;
-unsigned int aTuneLookBack=20;
 
 double setpoint = 1000;
-
-double target_pwm, kp =1 , ki =1, kd =1;
 
 extern double encoderPositions[4];
 
@@ -44,8 +31,6 @@ void setup()   /****** SETUP: RUNS ONCE ******/
   rs485_init(); // RS485 pin config and serial init
 
 }
-char buffer [33];
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
