@@ -4,7 +4,7 @@
 #include "functions.h"
 #include <arm_handler/arm_msg.h>
 
-boolean isr_flag = false;
+//boolean isr_flag = false;
 extern ros::NodeHandle  nh;
 extern ros::Publisher feedback;
 extern arm_handler::arm_msg arm_pose;

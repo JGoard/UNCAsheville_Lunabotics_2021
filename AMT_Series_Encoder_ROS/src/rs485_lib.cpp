@@ -4,27 +4,25 @@
 #include "macros.h"
 #include "functions.h"
 
-extern IntervalTimer encoderTimer;
-volatile boolean encoderFlag;
-//volatile extern int byteOut;
 extern ros::NodeHandle  nh;
 extern arm_handler::arm_msg arm_pose;
-extern ros::Publisher pub;
+
+char byteOut[ARM_DOF]={WRIST, ELBOW, SHOULDER, HIP};
+uint16_t encoderPositions[ARM_DOF];
+
 
 uint16_t byteIn;
 uint16_t byteJetson;
 uint8_t rxByte;
-//uint16_t lowByte;
 uint16_t data;
 uint16_t lowByte;
 uint16_t highByte;
 uint16_t resolutionShift;
 
- char byteOut[4]={WRIST, ELBOW, SHOULDER, HIP};
- double encoderPositions[4];
+extern IntervalTimer encoderTimer;
+volatile boolean encoderFlag;
 
-
-extern boolean isr_flag;
+//extern boolean isr_flag;
 extern volatile int transStatus;
 
 int encoderNodeCounter = INIT; //test

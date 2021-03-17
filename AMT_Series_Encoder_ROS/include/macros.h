@@ -58,6 +58,6 @@
 #define Ki 10
 #define Kd 0 */
 
-
+#define ARM_DOF 4
 
 #endif /* MACROS_H_ */

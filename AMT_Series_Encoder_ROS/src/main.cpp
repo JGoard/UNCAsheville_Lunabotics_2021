@@ -5,20 +5,16 @@
 #include "functions.h"
 
 arm_handler::arm_msg arm_pose;
+
 ros::NodeHandle  nh;
 ros::Publisher feedback("arm_pose", &arm_pose);
 
-int transStatus;
+int transStatus = INIT;
 bool published = true;
 volatile extern bool encoderFlag;
-unsigned long int currentMillis;
-
 IntervalTimer encoderTimer;
 
-
-double setpoint = 1000;
-
-extern double encoderPositions[4];
+extern uint16_t encoderPositions[ARM_DOF];
 
 //Specify the links and initial tuning parameters
 //double Kp=2, Ki=5, Kd=1;
