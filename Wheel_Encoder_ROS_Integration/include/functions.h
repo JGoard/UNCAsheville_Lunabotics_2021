@@ -3,6 +3,7 @@
 
 void setup(void);
 void init_encoderCounter(void);
+void encoderCount(void);
 
 
 
