@@ -14,6 +14,8 @@ void ros_init(void);
 void rs485_init(void);
 void pollEncoder(void);
 
+void AutoTuneHelper(boolean);
+void changeAutoTune(void);
 
 
 #endif /* FUNCTIONS_H_ */

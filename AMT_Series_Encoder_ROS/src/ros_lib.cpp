@@ -1,9 +1,9 @@
 #include <Arduino.h>
-//#include <SoftwareSerial.h>
 #include <ros.h>
 #include <std_msgs/UInt16.h>
 #include "macros.h"
 #include "functions.h"
+#include <arm_subscriber/arm_msg.h>
 
 boolean isr_flag = false;
 extern ros::NodeHandle  nh;
