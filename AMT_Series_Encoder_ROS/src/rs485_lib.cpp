@@ -1,14 +1,15 @@
 #include <Arduino.h>
 #include<ros.h>
-#include <arm_subscriber/arm_msg.h>
+#include <arm_handler/arm_msg.h>
 #include "macros.h"
 #include "functions.h"
+
 extern IntervalTimer encoderTimer;
 volatile boolean encoderFlag;
 //volatile extern int byteOut;
 extern ros::NodeHandle  nh;
-
-
+extern arm_handler::arm_msg arm_pose;
+extern ros::Publisher pub;
 
 uint16_t byteIn;
 uint16_t byteJetson;
@@ -19,8 +20,6 @@ uint16_t lowByte;
 uint16_t highByte;
 uint16_t resolutionShift;
 
-extern arm_subscriber::arm_msg wristElbow;
-extern ros::Publisher pub;
  char byteOut[4]={WRIST, ELBOW, SHOULDER, HIP};
  double encoderPositions[4];
 
@@ -98,7 +97,7 @@ void RS485Transmit_Addr(void){
     RS485Transmit_EN();
     Serial1.write(byteOut[encoderNodeCounter]);      // Send byte to encoder
     (byteOut[encoderNodeCounter]);
-    wristElbow.joint = byteOut[encoderNodeCounter];
+    arm_pose.joint = byteOut[encoderNodeCounter];
     encoderNodeCounter++; //Increment node address array
 
    
@@ -139,8 +138,8 @@ void RS485Receive_Pos(void){
           highByte = byteIn; 
           data = word(highByte, lowByte);
           data = data & HIGHBYTE_MASK; //Gets rid of top 2 checksum bits
-          wristElbow.data = data >> SHIFT_RES;
-          encoderPositions[encoderNodeCounter] = wristElbow.data; //records data from W,E,S,H and assigns to 
+          arm_pose.data = data >> SHIFT_RES;
+          encoderPositions[encoderNodeCounter] = arm_pose.data; //records data from W,E,S,H and assigns to 
           
           break;                                                  //each variable
 
@@ -153,7 +152,7 @@ void RS485Receive_Pos(void){
        
         /* if (PUBLISH){
           nh.logwarn("CONCAT");
-          pub.publish(&wristElbow);
+          pub.publish(&arm_pose);
           nh.spinOnce();
           delay(10);
         } */

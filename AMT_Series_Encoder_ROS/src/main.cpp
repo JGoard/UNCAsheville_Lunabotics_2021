@@ -1,12 +1,12 @@
 #include <Arduino.h>
 #include <ros.h>
-#include <arm_subscriber/arm_msg.h>
+#include <arm_handler/arm_msg.h>
 #include "macros.h"
 #include "functions.h"
 
-arm_subscriber::arm_msg wristElbow;
+arm_handler::arm_msg arm_pose;
 ros::NodeHandle  nh;
-ros::Publisher pub("arm_pose", &wristElbow);
+ros::Publisher feedback("arm_pose", &arm_pose);
 
 int transStatus;
 bool published = true;
@@ -50,11 +50,6 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
   RS485Receive_Pos();
 
 
- if (PUBLISH){
-          //nh.logwarn("CONCAT");
-          pub.publish(&wristElbow);
-          nh.spinOnce();
-          delay(10);
-        }
+ros_update();
 }
 
