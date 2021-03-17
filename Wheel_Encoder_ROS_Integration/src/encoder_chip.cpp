@@ -10,36 +10,36 @@ void init_encoderCounter(void){
     digitalWrite(1,LOW);
     analogWrite(2,25); //Not sure why these values are here or 
     analogWrite(3,50); //their significance
-    digitalWrite(CCKEN,LOW);
-    digitalWrite(CCLR,HIGH);
+    digitalWrite(CCKEN_F,LOW);
+    digitalWrite(CCLR_F,HIGH);
 
 }
 
 void encoderCount(void){
 
   if(digitalRead(BITF_0)){
-    val += ONES;
+    currentEncoderVal += ONES;
   }
   if(digitalRead(BITF_1)){
-    val += TWOS;
+    currentEncoderVal += TWOS;
   }
   if(digitalRead(BITF_2)){
-    val += THREES;
+    currentEncoderVal += THREES;
   }
   if(digitalRead(BITF_3)){
-    val += FOURS;
+    currentEncoderVal += FOURS;
   }
   if(digitalRead(BITF_4)){
-    val += FIVES;
+    currentEncoderVal += FIVES;
   }
   if(digitalRead(BITF_5)){
-    val += SIXTHS;
+    currentEncoderVal += SIXTHS;
   }
   if(digitalRead(BITF_6)){
-    val += SEVENTHS;
+    currentEncoderVal += SEVENTHS;
   }
   if(digitalRead(BITF_7)){
-    val += EIGHTHS;
+    currentEncoderVal += EIGHTHS;
   }
 
 
