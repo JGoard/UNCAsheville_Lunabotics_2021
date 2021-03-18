@@ -5,13 +5,26 @@
 extern volatile int currentEncoderVal;
 
 void init_encoderCounter(void){
+  
+    pinMode(BITF_0,INPUT);
+    pinMode(BITF_1,INPUT);
+    pinMode(BITF_2,INPUT);
+    pinMode(BITF_3,INPUT);
+    pinMode(BITF_4,INPUT);
+    pinMode(BITF_5,INPUT);
+    pinMode(BITF_6,INPUT);
+    pinMode(BITF_7,INPUT);
 
-    digitalWrite(0,HIGH);
-    digitalWrite(1,LOW);
-    analogWrite(2,25); //Not sure why these values are here or 
-    analogWrite(3,50); //their significance
-    digitalWrite(CCKEN_F,LOW);
-    digitalWrite(CCLR_F,HIGH);
+    pinMode(MRC_F ,OUTPUT);
+    pinMode(CPR_F,OUTPUT);
+
+    digitalWrite(MRC_F,HIGH);
+    digitalWrite(CPR_F,LOW);
+
+    pinMode(F_MOTOR_PWM ,OUTPUT);
+    pinMode(F_MOTOR_DIR,OUTPUT);
+    digitalWrite(F_MOTOR_DIR,HIGH);
+    digitalWrite(F_MOTOR_PWM,100);
 
 }
 

@@ -8,8 +8,8 @@
 ///////////////
 //Macro Pinouts for  Front Wheel Encoder Chip
 ///////////////
-#define CCLR_F   0
-#define CCKEN_F  1
+#define MRC_F    0
+#define CPR_F    1
 
 #define BITF_0   2
 #define BITF_1   3
@@ -21,6 +21,7 @@
 #define BITF_7   9
 
 #define F_MOTOR_PWM 10
+#define F_MOTOR_DIR 34
 #define F_CURRENTSENSE 24
 
 //////////////
