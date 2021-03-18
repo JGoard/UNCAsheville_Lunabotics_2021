@@ -30,9 +30,10 @@ void zero_encoders(const std_srvs::Empty::Request &req, std_srvs::Empty::Respons
 // PID control functions
 void PI_control(int);
 void accumError(void);
-float arraySum (uint16_t);
+float arraySum(uint16_t);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+void init_pin(void);
 void positionZero(void);
 
 #endif /* FUNCTIONS_H_ */

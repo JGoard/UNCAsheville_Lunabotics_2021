@@ -11,7 +11,6 @@ arm_handler::arm_msg arm_goal;
 ros::NodeHandle  nh;
 ros::Publisher feedback("arm_pose", &arm_pose);
 ros::Subscriber<arm_handler::arm_msg> goal("arm_goal", &goal_callback);
-ros::ServiceServer<std_srvs::Empty::Request, std_srvs::Empty::Response> PID("update_pid", &update_PID);
 ros::ServiceServer<std_srvs::Empty::Request, std_srvs::Empty::Response> zero_pose("zero_pose", &zero_encoders);
 
 int transStatus = INIT;
@@ -19,28 +18,13 @@ bool published = true;
 volatile extern bool encoderFlag;
 IntervalTimer encoderTimer;
 extern uint16_t encoderPositions[ARM_DOF];
-volatile uint16_t targetPose [ARM_DOF];
+volatile uint16_t targetPose [ARM_DOF] = {INIT_POSE};
 
 void setup()   /****** SETUP: RUNS ONCE ******/
 {
-
-
   ros_init();   // setup ROS node handle, topic interfaces and parameters
   rs485_init(); // RS485 pin config and serial init
-  pinMode(WRIST_PWM,OUTPUT);
-  pinMode(WRIST_DIR,OUTPUT);
-  pinMode(ELBOW_PWM,OUTPUT);
-  pinMode(ELBOW_DIR,OUTPUT);
-  pinMode(SHOULDER_PWM,OUTPUT);
-  pinMode(SHOULDER_DIR,OUTPUT);
-  pinMode(HIP_PWM,OUTPUT);
-  pinMode(HIP_DIR,OUTPUT);
- //temp init of target pose:
- targetPose[WRIST] = 2048;
- targetPose[ELBOW] = 2048;
- targetPose[SHOULDER] = 2048;
- targetPose[HIP] = 2048;
-
+  init_pin();
 }
 
 
@@ -67,3 +51,16 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
   nh.spinOnce();
 }
 
+
+
+void init_pin(void){
+  pinMode(WRIST_PWM,OUTPUT);
+  pinMode(WRIST_DIR,OUTPUT);
+  pinMode(ELBOW_PWM,OUTPUT);
+  pinMode(ELBOW_DIR,OUTPUT);
+  pinMode(SHOULDER_PWM,OUTPUT);
+  pinMode(SHOULDER_DIR,OUTPUT);
+  pinMode(HIP_PWM,OUTPUT);
+  pinMode(HIP_DIR,OUTPUT);
+  pinMode(A13,INPUT);
+}

@@ -63,13 +63,12 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~
 // PID Macros:
-#define Kp_INIT      275
-#define Ki_INIT      0
-#define Kd_INIT      0
 
-#define Kp 0
-#define Ki 1
-#define Kd 2
+#define Kp 0.0471
+#define Ki 0.00
+#define Kd 0
+
+#define INIT_POSE    2048
 
 #define PID_PARAMS      3
 #define CUI_RES      4096
@@ -77,12 +76,18 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~
 // ROS Macros:
-#define ROS_BAUD  57600
+#define ROS_BAUD  500000
 //~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Accelerometer Macros ISM330DLC
 //#define I2C_SDA 18
 //#define I2C_SCL 19
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Current sensing macros:
+#define FAULT_CURRENT   // ~130mV max reading from CS pin
 
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #endif /* MACROS_H_ */

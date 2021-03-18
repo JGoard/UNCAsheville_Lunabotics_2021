@@ -11,7 +11,6 @@ extern volatile arm_handler::arm_msg arm_pose;
 
 extern volatile uint16_t encoderPositions[ARM_DOF];
 extern volatile uint16_t targetPose [ARM_DOF];
-extern volatile int PID_params[PID_PARAMS];
 
 uint16_t errorAccumulator[ARM_DOF][ACCUM_FULL] = {INIT};
 int errorParse = INIT;
@@ -36,11 +35,10 @@ float arraySum (uint16_t array[ACCUM_FULL]){
 //
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 void PI_control(int node){ 
     int target_PWM;
-    int node_dir = 22;
-    int node_pwm = 2;
+    int node_dir;
+    int node_pwm;
     float error = (targetPose[node] - encoderPositions[node]); 
 
      switch(node){
@@ -85,7 +83,6 @@ void PI_control(int node){
         errorParse = INIT;
     }
     
-    target_PWM = (int)((PID_params[Kp]*(error/CUI_RES)) + (PID_params[Ki]*(arraySum(errorAccumulator[WRIST])/CUI_RES)));
-
+    target_PWM = (int)(Kp*error + Ki*arraySum(errorAccumulator[WRIST]));
     analogWrite(node_pwm, target_PWM);
 }
