@@ -38,7 +38,6 @@ float arraySum (uint16_t array[ACCUM_FULL]){
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void PI_control(int node){ 
-
     int target_PWM;
     int node_dir = 22;
     int node_pwm = 2;
@@ -48,21 +47,25 @@ void PI_control(int node){
         case WRIST:{
             node_dir = WRIST_DIR;
             node_pwm = WRIST_PWM;
+            //nh.logwarn("WRIST");
             break;
         }
         case ELBOW:{
             node_dir = ELBOW_DIR;
             node_pwm = ELBOW_PWM;
+            //nh.logwarn("ELBOW");
             break;
         }
         case SHOULDER:{
             node_dir = SHOULDER_DIR;
             node_pwm = SHOULDER_PWM;
+            //nh.logwarn("SHOULDER");
             break;
         }
         case HIP:{
             node_dir = HIP_DIR;
             node_pwm = HIP_PWM;
+            //nh.logwarn("HIP");
             break;
         }
      }
@@ -82,6 +85,7 @@ void PI_control(int node){
         errorParse = INIT;
     }
     
-    target_PWM = (int)(PID_params[Kp]*(error/CUI_RES)); //+ (PID_params[Ki]*(arraySum(errorAccumulator[WRIST])/CUI_RES)));
+    target_PWM = (int)((PID_params[Kp]*(error/CUI_RES)) + (PID_params[Ki]*(arraySum(errorAccumulator[WRIST])/CUI_RES)));
+
     analogWrite(node_pwm, target_PWM);
 }

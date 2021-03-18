@@ -3,12 +3,6 @@
 #define MACROS_H_
 
 
-//MACROS FOR PINS TAKEN ON TEENSY
-
-#define RX        0  //These two pins are for the RS-485 
-#define TX        1  //Implementation on the board for encoders
-
-
 //MACROS FOR STATES AND OTHER FUNKY NUMBERS
 #define INIT  0
 
@@ -28,43 +22,49 @@
 #define ENCODER_TIME_POLL 10000
 #define ENCODERS_CYCLED encoderNodeCounter == 4
 
-//#define RxTx 3
-#define Re    3 
-#define De    5
+
 
 #define Transmit    HIGH
 #define Receive     LOW
 
 #define Pin13LED        13
 #define RS485_BAUD      115200
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//RS485 PIN macros:
+#define RX        0  //These two pins are for the RS-485 
+#define TX        1  //Implementation on the board for encoders
+#define Re        2 
+#define De        3
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // joint macros:
 #define ARM_DOF         4
 
 #define WRIST           0
 #define WRIST_CHAR      'T' //0x50
-#define WRIST_PWM       2
-#define WRIST_DIR       22
+#define WRIST_PWM      9 //11
+#define WRIST_DIR      6 // 5
 
 #define ELBOW           1
 #define ELBOW_CHAR      'P' //0x54
-#define ELBOW_PWM  10//TBD 
-#define ELBOW_DIR  11//TBD
+#define ELBOW_PWM       11//9
+#define ELBOW_DIR       5//6
 
 #define SHOULDER        2
 #define SHOULDER_CHAR   'X' //0x58
-#define SHOULDER_PWM 12//TBD
-#define SHOULDER_DIR 13//TBD
+#define SHOULDER_PWM    10
+#define SHOULDER_DIR     7
 
-#define HIP             3
+#define HIP              3
 #define HIP_CHAR        'L' //0x4C
-#define HIP_PWM 14//TBD
-#define HIP_DIR 15//TBD
+#define HIP_PWM          12
+#define HIP_DIR          8
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~
 // PID Macros:
 #define Kp_INIT      275
-#define Ki_INIT      10
+#define Ki_INIT      0
 #define Kd_INIT      0
 
 #define Kp 0

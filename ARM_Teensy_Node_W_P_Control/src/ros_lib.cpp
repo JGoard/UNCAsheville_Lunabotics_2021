@@ -33,12 +33,13 @@ void ros_init(void){
 	nh.advertiseService(zero_pose); 
 	while (!nh.connected()) nh.spinOnce();
 
-	if (!nh.getParam("pid", PID_params, PID_PARAMS)){
+	if (!nh.getParam("/pid", PID_params, PID_PARAMS)){
 		PID_params[Kp] = Kp_INIT;
 		PID_params[Ki] = Ki_INIT;
 		PID_params[Kd] = Kd_INIT;
 		nh.logwarn("Using default PID values Kp=275, Ki = 0, Kd = 0");
 	} 
+	else nh.logwarn("PID parameters loaded");
 
 }
 

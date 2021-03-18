@@ -27,12 +27,19 @@ void setup()   /****** SETUP: RUNS ONCE ******/
 
   ros_init();   // setup ROS node handle, topic interfaces and parameters
   rs485_init(); // RS485 pin config and serial init
-
+  pinMode(WRIST_PWM,OUTPUT);
+  pinMode(WRIST_DIR,OUTPUT);
+  pinMode(ELBOW_PWM,OUTPUT);
+  pinMode(ELBOW_DIR,OUTPUT);
+  pinMode(SHOULDER_PWM,OUTPUT);
+  pinMode(SHOULDER_DIR,OUTPUT);
+  pinMode(HIP_PWM,OUTPUT);
+  pinMode(HIP_DIR,OUTPUT);
  //temp init of target pose:
- targetPose[WRIST] = 1000;
- targetPose[ELBOW] = 1000;
- targetPose[SHOULDER] = 1000;
- targetPose[HIP] = 1000;
+ targetPose[WRIST] = 2048;
+ targetPose[ELBOW] = 2048;
+ targetPose[SHOULDER] = 2048;
+ targetPose[HIP] = 2048;
 
 }
 
@@ -54,8 +61,7 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
   
   RS485Receive_Pos();
 
-  //for(int joint = WRIST; joint<=WRIST; joint++) 
-  PI_control(WRIST);
+  for(int joint = WRIST; joint<=HIP; joint++) PI_control(joint);
 
   ros_update();
   nh.spinOnce();
