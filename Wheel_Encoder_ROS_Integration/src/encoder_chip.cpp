@@ -44,5 +44,15 @@ void encoderCount(void){
 
 
 
+ /*  switch (ENCODER_COUNT)  //Would like to see some parrallel port processing used besides the digitalReads like up above
+  {                          //It's a nasty way to bottle neck up the system
+  case :
+
+  case   
+  
+  default:
+    break;
+  } */
+
 
 }

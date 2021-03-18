@@ -2,6 +2,7 @@
 #define MACROS_H_
 
 #define INIT 0
+#define ENCODER_COUNTF digitalRead(BITF_0)+ digitalRead(BITF_1)<<1 + digitalRead(BITF_2)<<2 + digitalRead(BITF_3)<<3 + digitalRead(BITF_4)<<4 +digitalRead(BITF_5)<<5 + digitalRead(BITF_6)<<6 + digitalRead(BITF_7)<<7 + digitalRead(BITF_8)<<8
 
 
 ///////////////
