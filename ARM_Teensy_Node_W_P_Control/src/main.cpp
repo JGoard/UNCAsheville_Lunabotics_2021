@@ -62,5 +62,6 @@ void init_pin(void){
   pinMode(SHOULDER_DIR,OUTPUT);
   pinMode(HIP_PWM,OUTPUT);
   pinMode(HIP_DIR,OUTPUT);
-  pinMode(A13,INPUT);
+  pinMode(A13,INPUT); // Current sense pin, probably won't work due to PWM being wacky
+  
 }
