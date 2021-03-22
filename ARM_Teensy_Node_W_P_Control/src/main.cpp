@@ -53,7 +53,7 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
 
 
 
-void init_pin(void){
+/* void init_pin(void){
   pinMode(WRIST_PWM,OUTPUT);
   pinMode(WRIST_DIR,OUTPUT);
   pinMode(ELBOW_PWM,OUTPUT);
@@ -64,4 +64,4 @@ void init_pin(void){
   pinMode(HIP_DIR,OUTPUT);
   pinMode(A13,INPUT); // Current sense pin, probably won't work due to PWM being wacky
   
-}
+} */

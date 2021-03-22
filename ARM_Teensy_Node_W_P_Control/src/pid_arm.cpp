@@ -17,6 +17,30 @@ int errorParse = INIT;
 
 //char Dec_to_Char[8]; 
 
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Function Header: init_pin
+//
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+void init_pin(void){
+  pinMode(WRIST_PWM,OUTPUT);
+  pinMode(WRIST_DIR,OUTPUT);
+  pinMode(ELBOW_PWM,OUTPUT);
+  pinMode(ELBOW_DIR,OUTPUT);
+  pinMode(SHOULDER_PWM,OUTPUT);
+  pinMode(SHOULDER_DIR,OUTPUT);
+  pinMode(HIP_PWM,OUTPUT);
+  pinMode(HIP_DIR,OUTPUT);
+  pinMode(A13,INPUT); // Current sense pin, probably won't work due to PWM being wacky
+  
+}
+
+
+
+
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Function Header: arraySum
 //
