@@ -8,6 +8,7 @@ void frontEncoderCount(void);
 void midEncoderCount(void);
 void backEncoderCount(void);
 
+void ros_init(void);
 
 
 

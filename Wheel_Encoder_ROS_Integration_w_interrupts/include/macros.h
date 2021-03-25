@@ -33,6 +33,20 @@
 #define B_MOTOR_DIR
 #define B_CURRENTSENSE 40
 
+//////////////
+//Macros for ROS
+//////////////
+
+#define ROS_BAUD 57600
+
+//////////////
+//Macros for velocity calc
+//////////////
+
+#define CIRCUMFERENCE 2*pi*0.15 //2pi * 0.15 meters is total perimeter of wheel
+#define PULSES 300 //Due to it being measured as a rising edge, if otherwise such as changing, it would be 600
+#define DIST_PER_PULSE CIRCUMFERENCE/PULSES //Amount of distance per pulse .003141 meters/pulse
+
 
 ////////////////
 
