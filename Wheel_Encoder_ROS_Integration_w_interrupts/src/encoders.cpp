@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "macros.h"
 #include "functions.h"
+#include <IntervalTimer.h>
 
 volatile int frontCount = INIT;
 volatile int midCount = INIT;
@@ -9,6 +10,9 @@ volatile int backCount = INIT;
 bool printFront = false;
 bool printMid = false;
 bool printBack = false;
+IntervalTimer velCalc;
+float frontVelocity;
+
 
 
 //////////////
@@ -40,6 +44,7 @@ void init_encoderCounter(void){
 
     digitalWrite(F_MOTOR_DIR,HIGH);
     digitalWrite(F_MOTOR_PWM,100);
+    velCalc.begin(calcVelocity, VELOCITY_CALC_TIMER); //Currently set at 100 Hz
 
 }
 
@@ -95,3 +100,16 @@ Circumference is 2*Pi*r.  Angular velocity is just unit distance per second.
 So how many pulses per revolution, what is the circumference? 
 Circumference divided by pulses per revolution = distance per pulse. Measure the time per pulse, 
 distance per pulse divided by time per pulse = distance/time. */
+
+
+void calcVelocity(){
+    
+    int frontDistance = frontCount * DIST_PER_PULSE; //Will calculate amount traveled, frontCount is rising edge based
+    frontCount = INIT;
+    frontVelocity = frontDistance * VELOCITY_TIME_DIVIDER;  //Since calcVelocity is running 100 times a second, multiplied by 1/100 sec
+
+
+
+
+
+}

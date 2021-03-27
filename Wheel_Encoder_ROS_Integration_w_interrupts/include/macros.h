@@ -45,8 +45,9 @@
 
 #define CIRCUMFERENCE 2*pi*0.15 //2pi * 0.15 meters is total perimeter of wheel
 #define PULSES 300 //Due to it being measured as a rising edge, if otherwise such as changing, it would be 600
-#define DIST_PER_PULSE CIRCUMFERENCE/PULSES //Amount of distance per pulse .003141 meters/pulse
-
+#define DIST_PER_PULSE .00314159 //Amount of distance per pulse .003141 meters/pulse... Circum/Pulse
+#define VELOCITY_CALC_TIMER 10000 //100 HZ
+#define VELOCITY_TIME_DIVIDER 100
 
 ////////////////
 
