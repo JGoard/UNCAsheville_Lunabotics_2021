@@ -3,15 +3,22 @@
 #include "functions.h"
 #include <IntervalTimer.h>
 
-volatile int frontCount = INIT;
-volatile int midCount = INIT;
-volatile int backCount = INIT;
+volatile int currentfrontCount = INIT;
+volatile int currentmidCount = INIT;
+volatile int currentbackCount = INIT;
+
+volatile int previousfrontCount = INIT;
+volatile int previousmidCount = INIT;
+volatile int previousbackCount = INIT;
+
 
 bool printFront = false;
 bool printMid = false;
 bool printBack = false;
 IntervalTimer velCalc;
 float frontVelocity;
+float midVelocity;
+float backVelocity;
 
 
 
@@ -31,6 +38,7 @@ void init_encoderCounter(void){
    attachInterrupt(M_HALL_CHANNEL, midEncoderCount, RISING);   //these pins
    attachInterrupt(B_HALL_CHANNEL, backEncoderCount, RISING);  //Currently, these wheels will spin 300 counts
                                                                //per revolution
+                                                               //If resolution would like to be increased, change to CHANGE
 
 
     pinMode(F_MOTOR_PWM, OUTPUT);
@@ -103,10 +111,17 @@ distance per pulse divided by time per pulse = distance/time. */
 
 
 void calcVelocity(){
-    
-    int frontDistance = frontCount * DIST_PER_PULSE; //Will calculate amount traveled, frontCount is rising edge based
-    frontCount = INIT;
-    frontVelocity = frontDistance * VELOCITY_TIME_DIVIDER;  //Since calcVelocity is running 100 times a second, multiplied by 1/100 sec
+
+    frontVelocity = FRONT_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT;
+    midVelocity = MID_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT;
+    backVelocity = BACK_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT;
+
+
+    previousfrontCount = currentfrontCount;
+    previousmidCount = currentmidCount;
+    previousbackCount = currentbackCount;
+  
+
 
 
 
