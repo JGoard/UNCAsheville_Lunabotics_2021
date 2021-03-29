@@ -110,11 +110,18 @@ Circumference divided by pulses per revolution = distance per pulse. Measure the
 distance per pulse divided by time per pulse = distance/time. */
 
 
-void calcVelocity(){
+void calcVelocity(){ //Calculating at 100Hz sampling
 
-    frontVelocity = FRONT_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT;
+    /* frontVelocity = FRONT_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT;
     midVelocity = MID_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT;
-    backVelocity = BACK_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT;
+    backVelocity = BACK_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT; */
+
+    frontVelocity = FRONT_VEL_CONSTANT/PULSE_PER_METER;
+    midVelocity = MID_VEL_CONSTANT/PULSE_PER_METER; 
+    backVelocity = BACK_VEL_CONSTANT/PULSE_PER_METER;
+
+    //Not sure which of the ones to do above would work 
+
 
 
     previousfrontCount = currentfrontCount;
