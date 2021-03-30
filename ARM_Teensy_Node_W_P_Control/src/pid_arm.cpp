@@ -128,9 +128,7 @@ void monitorarmCurrent(){
         {
             if (armCurs[node] == FAULT_CURRENT){
                 armSafe = false; //turns off all arms and encoders
-
             }
-
         }
     
 
