@@ -126,7 +126,7 @@ void monitorarmCurrent(){
 
     for (int node = INIT; node  <= ARM_DOF; node++)
         {
-            if (armCurs[node] == FAULT_CURRENT){
+            if (armCurs[node] >= FAULT_CURRENT){
                 armSafe = false; //turns off all arms and encoders
             }
         }
