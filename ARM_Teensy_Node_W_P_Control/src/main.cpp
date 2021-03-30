@@ -19,6 +19,7 @@ volatile extern bool encoderFlag;
 IntervalTimer encoderTimer;
 extern uint16_t encoderPositions[ARM_DOF];
 volatile uint16_t targetPose [ARM_DOF] = {INIT_POSE};
+volatile bool armSafe = true;
 
 void setup()   /****** SETUP: RUNS ONCE ******/
 {
@@ -35,21 +36,30 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
 {
   digitalWrite(Pin13LED, HIGH);       //On when not transmitting
 
-  RS485Transmit_Addr(); // Includes Transmitting Code. Only allows for two
-                        // two node addresses currently.  Would be nice if 
-                        // we could speed up publishing speed.  logwarns start
-                        // to collide once we get to around 1/10 of a sec
-                        // for encoder polling (ENCODER_TIME_POLL)
+  monitorarmCurrent(); //Monitors arm current and will prevent future arm movement if over current drawn is sensed
 
-    
-  
-  RS485Receive_Pos();
+  RS485Transmit_Addr(); // Includes Transmitting Code.
+  RS485Receive_Pos(); //Receiving code for absolute encoders
 
-  for(int joint = WRIST; joint<=HIP; joint++) PI_control(joint);
+ if(armSafe){ //Allows PI_Control of arm to function only if over current fault isn't set in monitorarmCurrent();
+
+    for(int joint = WRIST; joint<=HIP; joint++) PI_control(joint);
+
+ }
+
+ else{                //If arm isn't safe. fails when current is overdrawn in any of the motors in monitorarmCurrent
+
+  armcurrentProtection(); 
+
+ }
 
   ros_update();
   nh.spinOnce();
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

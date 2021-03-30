@@ -22,7 +22,7 @@
 #define ENCODER_TIME_POLL 10000
 #define ENCODERS_CYCLED encoderNodeCounter == 4
 
-
+#define TURN_OFF 0
 
 #define Transmit    HIGH
 #define Receive     LOW
@@ -39,27 +39,39 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // joint macros:
+
+
+/* 24- Motor 2 Current Sensor
+25- Motor 3 Current Sensor
+26- Motor 4 Current Sensor
+27- Motor 1 Current Sensor */
+
+
 #define ARM_DOF         4
 
 #define WRIST           0
 #define WRIST_CHAR      'T' //0x50
 #define WRIST_PWM      9 //11
 #define WRIST_DIR      6 // 5
+#define WRIST_CS       
 
 #define ELBOW           1
 #define ELBOW_CHAR      'P' //0x54
 #define ELBOW_PWM       11//9
 #define ELBOW_DIR       5//6
+#define ELBOW_CS
 
 #define SHOULDER        2
 #define SHOULDER_CHAR   'X' //0x58
 #define SHOULDER_PWM    10
 #define SHOULDER_DIR     7
+#define SHOULDER_CS
 
 #define HIP              3
 #define HIP_CHAR        'L' //0x4C
 #define HIP_PWM          12
 #define HIP_DIR          8
+#define HIP_CS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~
 // PID Macros:

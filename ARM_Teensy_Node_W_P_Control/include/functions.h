@@ -31,6 +31,12 @@ void zero_encoders(const std_srvs::Empty::Request &req, std_srvs::Empty::Respons
 void PI_control(int);
 void accumError(void);
 float arraySum(uint16_t);
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Arm OverCurrent Protections
+void armcurrentProtection(void);
+void monitorarmCurrent(void);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void init_pin(void);

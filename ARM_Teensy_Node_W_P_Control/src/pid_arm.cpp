@@ -15,6 +15,8 @@ extern volatile uint16_t targetPose [ARM_DOF];
 uint16_t errorAccumulator[ARM_DOF][ACCUM_FULL] = {INIT};
 int errorParse = INIT;
 
+extern volatile bool armSafe;
+
 //char Dec_to_Char[8]; 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,4 +87,51 @@ void PI_control(int node){
     
     target_PWM = (int)(Kp*error + Ki*arraySum(errorAccumulator[WRIST]));
     analogWrite(node_pwm, target_PWM);
+}
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Function Header: Turns off write to arm and locks up
+// MCU until reset
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void armcurrentProtection(){
+
+ for (int node = WRIST_PWM; node  <= HIP_PWM; node++)
+    {
+       analogWrite(node, TURN_OFF);
+
+    }
+
+
+
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Function Header: Monitors current of arm
+//
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void monitorarmCurrent(){
+
+    int armCurs[ARM_DOF];
+
+    armCurs[WRIST] = analogRead(); //Wrist //Need to inclide Analog reads for current sense pins here
+    armCurs[ELBOW] = analogRead(); //Elbow
+    armCurs[SHOULDER] = analogRead(); //Shoulder
+    armCurs[HIP] = analogRead(); //Hip 
+
+    for (int node = INIT; node  <= ARM_DOF; node++)
+        {
+            if (armCurs[node] == FAULT_CURRENT){
+                armSafe = false; //turns off all arms and encoders
+
+            }
+
+        }
+    
+
 }
