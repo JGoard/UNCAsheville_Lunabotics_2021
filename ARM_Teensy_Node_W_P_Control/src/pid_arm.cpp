@@ -46,7 +46,6 @@ void PI_control(int node){
 
      switch(node){
         case WRIST:{
-                  //Only if target pose is within appropriate/safe range will it actually assign
                  node_dir = WRIST_DIR;// a usable PWM level, if it's not acceptable it falls through
                  node_pwm = WRIST_PWM;/
                  protectionSwitch[node] = true; //
@@ -57,34 +56,29 @@ void PI_control(int node){
             break;
         }
         case ELBOW:{
-           if(ELBOW_LIMIT){ 
             node_dir = ELBOW_DIR;
             node_pwm = ELBOW_PWM;
             protectionSwitch[node] = true; 
             //nh.logwarn("ELBOW");
-           }
-           else protectionSwitch[node] = false; 
+           
             break;
         }
         case SHOULDER:{
-           if(SHOULDER_LIMIT){ 
             node_dir = SHOULDER_DIR;
             node_pwm = SHOULDER_PWM;
             protectionSwitch[node] = true; 
             //nh.logwarn("SHOULDER");
-           }
-           else protectionSwitch[node] = false; 
+           
             break;
         }
         case HIP:{
-           if(HIP_LIMIT){ 
+           
             node_dir = HIP_DIR;
             node_pwm = HIP_PWM;
             protectionSwitch[node] = true; 
             //nh.logwarn("HIP");
-           }
+           
 
-           else protectionSwitch[node] = true; 
             break;
         }
      }
@@ -104,11 +98,10 @@ void PI_control(int node){
         errorParse = INIT;
     }
     
-        if (protectionSwitch[node])// 
-        {
+
              target_PWM = (int)(Kp*error + Ki*arraySum(errorAccumulator[WRIST]));
              analogWrite(node_pwm, target_PWM);
-        }
+        
 
         else analogWrite(node_pwm, TURN_OFF)
         
