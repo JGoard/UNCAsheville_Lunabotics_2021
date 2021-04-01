@@ -66,20 +66,61 @@ void ros_update(void){
 void goal_callback( const arm_handler::arm_msg &joint_goal){
 	switch(joint_goal.joint){
 		case WRIST_CHAR:{
-			targetPose[WRIST] = joint_goal.data;
+			if(WRIST_LIMIT){
+				targetPose[WRIST] = joint_goal.data;
+			}
+			else{
+
+              if (WRIST_LOW_LIMIT_COMP && !WRIST_HIGH_LIMIT_COMP)   //If the target pose is higher than the lower limit, and is higher than the 
+                  targetPose[node] = WRIST_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
+               
+
+              if (!WRIST_LOW_LIMIT_COMP && WRIST_HIGH_LIMIT_COMP)             //If the target pose is lower than the lower limit, and is lower than the high
+                 targetPose[node] = WRIST_LOW_LIMIT;                //limit, the wrist stays in the low position
+			}
 			break;
 		}
 		case ELBOW_CHAR:{
-			targetPose[ELBOW] = joint_goal.data;
-			break;
+			if(ELBOW_LIMIT){
+				targetPose[ELBOW] = joint_goal.data;
+			}
+			else{
+
+              if (ELBOW_LOW_LIMIT_COMP && !ELBOW_HIGH_LIMIT_COMP)   //If the target pose is higher than the lower limit, and is higher than the 
+                  targetPose[node] = ELBOW_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
+               
+
+              if (!ELBOW_LOW_LIMIT_COMP && ELBOW_HIGH_LIMIT_COMP)             //If the target pose is lower than the lower limit, and is lower than the high
+                 targetPose[node] = ELBOW_LOW_LIMIT;                //limit, the ELBOW stays in the low position
+			}			break;
 		}
 		case SHOULDER_CHAR:{
-			targetPose[SHOULDER] = joint_goal.data;
-			break;
+			if(SHOULDER_LIMIT){
+				targetPose[SHOULDER] = joint_goal.data;
+			}
+			else{
+
+              if (SHOULDER_LOW_LIMIT_COMP && !SHOULDER_HIGH_LIMIT_COMP)   //If the target pose is higher than the lower limit, and is higher than the 
+                  targetPose[node] = SHOULDER_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
+               
+
+              if (!SHOULDER_LOW_LIMIT_COMP && SHOULDER_HIGH_LIMIT_COMP)             //If the target pose is lower than the lower limit, and is lower than the high
+                 targetPose[node] = SHOULDER_LOW_LIMIT;                //limit, the wrist stays in the low position
+			}			break;
 		}
 		case HIP_CHAR:{
-			targetPose[HIP] = joint_goal.data;
-			break;
+			if(HIP_LIMIT){
+				targetPose[HIP] = joint_goal.data;
+			}
+			else{
+
+              if (HIP_LOW_LIMIT_COMP && !HIP_HIGH_LIMIT_COMP)   //If the target pose is higher than the lower limit, and is higher than the 
+                  targetPose[node] = HIP_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
+               
+
+              if (!HIP_LOW_LIMIT_COMP && HIP_HIGH_LIMIT_COMP)             //If the target pose is lower than the lower limit, and is lower than the high
+                 targetPose[node] = HIP_LOW_LIMIT;                //limit, the HIP stays in the low position
+			}				break;
 		}
 		default:{
 			nh.logfatal("invalid joint ID");

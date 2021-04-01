@@ -46,16 +46,14 @@ void PI_control(int node){
 
      switch(node){
         case WRIST:{
-            if(WRIST_LIMIT){        //Only if target pose is within appropriate/safe range will it actually assign
-                 node_dir = WRIST_DIR;// a usable PWM level, if it's not acceptable it falls through and just turns 
-                 node_pwm = WRIST_PWM;// off the motor until it gets to a safe range
+                  //Only if target pose is within appropriate/safe range will it actually assign
+                 node_dir = WRIST_DIR;// a usable PWM level, if it's not acceptable it falls through
+                 node_pwm = WRIST_PWM;/
                  protectionSwitch[node] = true; //
             //nh.logwarn("WRIST");
-            }
+            
 
-            else protectionSwitch[node] = false; 
-
-
+            
             break;
         }
         case ELBOW:{

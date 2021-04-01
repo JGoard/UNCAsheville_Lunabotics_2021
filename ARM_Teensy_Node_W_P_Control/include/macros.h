@@ -56,25 +56,43 @@
 #define WRIST_CS       24
 #define WRIST_LOW_LIMIT 1100
 #define WRIST_HIGH_LIMIT 3000
-#define WRIST_LIMIT ((targetPose[WRIST]>WRIST_LOW_LIMIT) && (targetPose[WRIST]<WRIST_HIGH_LIMIT))
+#define WRIST_LOW_LIMIT_COMP (targetPose[WRIST] > WRIST_LOW_LIMIT)
+#define WRIST_HIGH_LIMIT_COMP (targetPose[WRIST] < WRIST_HIGH_LIMIT)
+#define WRIST_LIMIT ((WRIST_LOW_LIMIT_COMP) && (WRIST_HIGH_LIMIT_COMP))
 
 #define ELBOW           1
 #define ELBOW_CHAR      'P' //0x54
 #define ELBOW_PWM       11//9
 #define ELBOW_DIR       5//6
 #define ELBOW_CS        25
+#define ELBOW_LOW_LIMIT 1100
+#define ELBOW_HIGH_LIMIT 3000
+#define ELBOW_LOW_LIMIT_COMP (targetPose[ELBOW] > ELBOW_LOW_LIMIT)
+#define ELBOW_HIGH_LIMIT_COMP (targetPose[ELBOW] < ELBOW_HIGH_LIMIT)
+#define ELBOW_LIMIT ((ELBOW_LOW_LIMIT_COMP) && (ELBOW_HIGH_LIMIT_COMP))
+
 
 #define SHOULDER        2
 #define SHOULDER_CHAR   'X' //0x58
 #define SHOULDER_PWM    10
 #define SHOULDER_DIR     7
 #define SHOULDER_CS     26
+#define SHOULDER_LOW_LIMIT 1100
+#define SHOULDER_HIGH_LIMIT 3000
+#define SHOULDER_LOW_LIMIT_COMP (targetPose[SHOULDER] > SHOULDER_LOW_LIMIT)
+#define SHOULDER_HIGH_LIMIT_COMP (targetPose[SHOULDER] < SHOULDER_HIGH_LIMIT)
+#define SHOULDER_LIMIT ((SHOULDER_LOW_LIMIT_COMP) && (SHOULDER_HIGH_LIMIT_COMP))
 
 #define HIP              3
 #define HIP_CHAR        'L' //0x4C
 #define HIP_PWM          12
 #define HIP_DIR          8
 #define HIP_CS          27
+#define HIP_LOW_LIMIT 1100
+#define HIP_HIGH_LIMIT 3000
+#define HIP_LOW_LIMIT_COMP (targetPose[HIP] > HIP_LOW_LIMIT)
+#define HIP_HIGH_LIMIT_COMP (targetPose[HIP] < HIP_HIGH_LIMIT)
+#define HIP_LIMIT ((HIP_LOW_LIMIT_COMP) && (HIP_HIGH_LIMIT_COMP))
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~
