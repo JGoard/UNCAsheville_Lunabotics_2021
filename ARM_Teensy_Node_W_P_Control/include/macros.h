@@ -54,6 +54,9 @@
 #define WRIST_PWM      9 //11
 #define WRIST_DIR      6 // 5
 #define WRIST_CS       24
+#define WRIST_LOW_LIMIT 1100
+#define WRIST_HIGH_LIMIT 3000
+#define WRIST_LIMIT ((targetPose[WRIST]>WRIST_LOW_LIMIT) && (targetPose[WRIST]<WRIST_HIGH_LIMIT))
 
 #define ELBOW           1
 #define ELBOW_CHAR      'P' //0x54
@@ -72,6 +75,7 @@
 #define HIP_PWM          12
 #define HIP_DIR          8
 #define HIP_CS          27
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~
 // PID Macros:

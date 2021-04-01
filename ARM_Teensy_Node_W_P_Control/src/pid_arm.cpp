@@ -41,31 +41,52 @@ void PI_control(int node){
     int target_PWM;
     int node_dir;
     int node_pwm;
+    bool protectionSwitch[4]; //Allows for PWM to occur if in right range
     float error = (targetPose[node] - encoderPositions[node]); 
 
      switch(node){
         case WRIST:{
-            node_dir = WRIST_DIR;
-            node_pwm = WRIST_PWM;
+            if(WRIST_LIMIT){        //Only if target pose is within appropriate/safe range will it actually assign
+                 node_dir = WRIST_DIR;// a usable PWM level, if it's not acceptable it falls through and just turns 
+                 node_pwm = WRIST_PWM;// off the motor until it gets to a safe range
+                 protectionSwitch[node] = true; //
             //nh.logwarn("WRIST");
+            }
+
+            else protectionSwitch[node] = false; 
+
+
             break;
         }
         case ELBOW:{
+           if(ELBOW_LIMIT){ 
             node_dir = ELBOW_DIR;
             node_pwm = ELBOW_PWM;
+            protectionSwitch[node] = true; 
             //nh.logwarn("ELBOW");
+           }
+           else protectionSwitch[node] = false; 
             break;
         }
         case SHOULDER:{
+           if(SHOULDER_LIMIT){ 
             node_dir = SHOULDER_DIR;
             node_pwm = SHOULDER_PWM;
+            protectionSwitch[node] = true; 
             //nh.logwarn("SHOULDER");
+           }
+           else protectionSwitch[node] = false; 
             break;
         }
         case HIP:{
+           if(HIP_LIMIT){ 
             node_dir = HIP_DIR;
             node_pwm = HIP_PWM;
+            protectionSwitch[node] = true; 
             //nh.logwarn("HIP");
+           }
+
+           else protectionSwitch[node] = true; 
             break;
         }
      }
@@ -85,8 +106,19 @@ void PI_control(int node){
         errorParse = INIT;
     }
     
-    target_PWM = (int)(Kp*error + Ki*arraySum(errorAccumulator[WRIST]));
-    analogWrite(node_pwm, target_PWM);
+        if (protectionSwitch[node])// 
+        {
+             target_PWM = (int)(Kp*error + Ki*arraySum(errorAccumulator[WRIST]));
+             analogWrite(node_pwm, target_PWM);
+        }
+
+        else analogWrite(node_pwm, TURN_OFF)
+        
+                            
+       
+    
+    
+    
 }
 
 

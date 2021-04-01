@@ -48,9 +48,9 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
     }
 
     else{                //If arm isn't safe, fails when current is overdrawn in any of the motors in monitorarmCurrent
-                          //No way to reset this unless teensy is completely hard reset
+        armcurrentProtection(); //No way to reset this unless teensy is completely hard reset
                           //All PWM is turned off
-      armcurrentProtection(); 
+      
 
     }
 
