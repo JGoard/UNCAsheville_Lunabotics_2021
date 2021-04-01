@@ -46,29 +46,24 @@ void PI_control(int node){
 
      switch(node){
         case WRIST:{
-                 node_dir = WRIST_DIR;// a usable PWM level, if it's not acceptable it falls through
-                 node_pwm = WRIST_PWM;/
-                 protectionSwitch[node] = true; //
-            //nh.logwarn("WRIST");
-            
-
-            
+            node_dir = WRIST_DIR;// a usable PWM level, if it's not acceptable it falls through
+            node_pwm = WRIST_PWM;
+            protectionSwitch[node] = true; //
+            //nh.logwarn("WRIST");          
             break;
         }
         case ELBOW:{
             node_dir = ELBOW_DIR;
             node_pwm = ELBOW_PWM;
-            protectionSwitch[node] = true; 
-            //nh.logwarn("ELBOW");
-           
+            protectionSwitch[node] = true;  
+            //nh.logwarn("ELBOW");           
             break;
         }
         case SHOULDER:{
             node_dir = SHOULDER_DIR;
             node_pwm = SHOULDER_PWM;
             protectionSwitch[node] = true; 
-            //nh.logwarn("SHOULDER");
-           
+            //nh.logwarn("SHOULDER");           
             break;
         }
         case HIP:{
@@ -77,8 +72,10 @@ void PI_control(int node){
             node_pwm = HIP_PWM;
             protectionSwitch[node] = true; 
             //nh.logwarn("HIP");
-           
-
+            break;
+        }
+        default: {
+            //nh.logwarn("ASS");
             break;
         }
      }
@@ -99,11 +96,10 @@ void PI_control(int node){
     }
     
 
-             target_PWM = (int)(Kp*error + Ki*arraySum(errorAccumulator[WRIST]));
-             analogWrite(node_pwm, target_PWM);
-        
+    target_PWM = (int)(Kp*error);// + Ki*arraySum(errorAccumulator[WRIST]));
+    analogWrite(node_pwm, target_PWM);
+            
 
-        else analogWrite(node_pwm, TURN_OFF)
         
                             
        
@@ -137,7 +133,7 @@ void armcurrentProtection(){
 
 void monitorarmCurrent(){
 
-    int armCurs[ARM_DOF];
+   /*  int armCurs[ARM_DOF];
 
     armCurs[WRIST] = analogRead(); //Wrist //Need to inclide Analog reads for current sense pins here
     armCurs[ELBOW] = analogRead(); //Elbow
@@ -150,6 +146,6 @@ void monitorarmCurrent(){
                 armSafe = false; //turns off all arms and encoders
             }
         }
-    
+     */
 
 }

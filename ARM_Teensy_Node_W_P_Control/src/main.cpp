@@ -11,14 +11,14 @@ arm_handler::arm_msg arm_goal;
 ros::NodeHandle  nh;
 ros::Publisher feedback("arm_pose", &arm_pose);
 ros::Subscriber<arm_handler::arm_msg> goal("arm_goal", &goal_callback);
-ros::ServiceServer<std_srvs::Empty::Request, std_srvs::Empty::Response> zero_pose("zero_pose", &zero_encoders);
+//ros::ServiceServer<std_srvs::Empty::Request, std_srvs::Empty::Response> zero_pose("zero_pose", &zero_encoders);
 
 int transStatus = INIT;
 bool published = true;
 volatile extern bool encoderFlag;
 IntervalTimer encoderTimer;
 extern uint16_t encoderPositions[ARM_DOF];
-volatile uint16_t targetPose [ARM_DOF] = {INIT_POSE};
+volatile uint16_t targetPose [ARM_DOF] = {INIT_POSE,INIT_POSE,INIT_POSE,INIT_POSE};
 volatile bool armSafe = true;
 
 void setup()   /****** SETUP: RUNS ONCE ******/

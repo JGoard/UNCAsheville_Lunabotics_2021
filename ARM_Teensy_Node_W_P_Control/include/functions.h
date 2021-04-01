@@ -22,8 +22,8 @@ void RS485ReceiveParse(void);
 void ros_init(void);
 void ros_update(void);
 void goal_callback(const arm_handler::arm_msg &goal);
-void update_PID(const std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
-void zero_encoders(const std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
+//void update_PID(const std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
+//void zero_encoders(const std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

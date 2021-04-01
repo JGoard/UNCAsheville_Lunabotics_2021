@@ -8,8 +8,8 @@
 extern ros::NodeHandle  nh;
 extern ros::Publisher feedback;
 extern ros::Subscriber<arm_handler::arm_msg> goal;
-extern ros::ServiceServer<std_srvs::Empty::Request, std_srvs::Empty::Response> PID;
-extern ros::ServiceServer<std_srvs::Empty::Request, std_srvs::Empty::Response> zero_pose;
+//extern ros::ServiceServer<std_srvs::Empty::Request, std_srvs::Empty::Response> PID;
+//extern ros::ServiceServer<std_srvs::Empty::Request, std_srvs::Empty::Response> zero_pose;
 extern arm_handler::arm_msg arm_pose;
 extern arm_handler::arm_msg arm_goal;
 
@@ -28,7 +28,7 @@ void ros_init(void){
 	nh.initNode();
 	nh.advertise(feedback);
 	nh.subscribe(goal);
-	nh.advertiseService(zero_pose); 
+	//nh.advertiseService(zero_pose); 
 	while (!nh.connected()) nh.spinOnce();
 
 }
@@ -72,11 +72,11 @@ void goal_callback( const arm_handler::arm_msg &joint_goal){
 			else{
 
               if (WRIST_LOW_LIMIT_COMP && !WRIST_HIGH_LIMIT_COMP)   //If the target pose is higher than the lower limit, and is higher than the 
-                  targetPose[node] = WRIST_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
+                  targetPose[WRIST] = WRIST_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
                
 
               if (!WRIST_LOW_LIMIT_COMP && WRIST_HIGH_LIMIT_COMP)             //If the target pose is lower than the lower limit, and is lower than the high
-                 targetPose[node] = WRIST_LOW_LIMIT;                //limit, the wrist stays in the low position
+                 targetPose[WRIST] = WRIST_LOW_LIMIT;                //limit, the wrist stays in the low position
 			}
 			break;
 		}
@@ -87,11 +87,11 @@ void goal_callback( const arm_handler::arm_msg &joint_goal){
 			else{
 
               if (ELBOW_LOW_LIMIT_COMP && !ELBOW_HIGH_LIMIT_COMP)   //If the target pose is higher than the lower limit, and is higher than the 
-                  targetPose[node] = ELBOW_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
+                  targetPose[ELBOW] = ELBOW_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
                
 
               if (!ELBOW_LOW_LIMIT_COMP && ELBOW_HIGH_LIMIT_COMP)             //If the target pose is lower than the lower limit, and is lower than the high
-                 targetPose[node] = ELBOW_LOW_LIMIT;                //limit, the ELBOW stays in the low position
+                 targetPose[ELBOW] = ELBOW_LOW_LIMIT;                //limit, the ELBOW stays in the low position
 			}			break;
 		}
 		case SHOULDER_CHAR:{
@@ -101,11 +101,11 @@ void goal_callback( const arm_handler::arm_msg &joint_goal){
 			else{
 
               if (SHOULDER_LOW_LIMIT_COMP && !SHOULDER_HIGH_LIMIT_COMP)   //If the target pose is higher than the lower limit, and is higher than the 
-                  targetPose[node] = SHOULDER_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
+                  targetPose[SHOULDER] = SHOULDER_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
                
 
               if (!SHOULDER_LOW_LIMIT_COMP && SHOULDER_HIGH_LIMIT_COMP)             //If the target pose is lower than the lower limit, and is lower than the high
-                 targetPose[node] = SHOULDER_LOW_LIMIT;                //limit, the wrist stays in the low position
+                 targetPose[SHOULDER] = SHOULDER_LOW_LIMIT;                //limit, the wrist stays in the low position
 			}			break;
 		}
 		case HIP_CHAR:{
@@ -115,11 +115,11 @@ void goal_callback( const arm_handler::arm_msg &joint_goal){
 			else{
 
               if (HIP_LOW_LIMIT_COMP && !HIP_HIGH_LIMIT_COMP)   //If the target pose is higher than the lower limit, and is higher than the 
-                  targetPose[node] = HIP_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
+                  targetPose[HIP] = HIP_HIGH_LIMIT;              //Highest limit, it will assign the high limit 
                
 
               if (!HIP_LOW_LIMIT_COMP && HIP_HIGH_LIMIT_COMP)             //If the target pose is lower than the lower limit, and is lower than the high
-                 targetPose[node] = HIP_LOW_LIMIT;                //limit, the HIP stays in the low position
+                 targetPose[HIP] = HIP_LOW_LIMIT;                //limit, the HIP stays in the low position
 			}				break;
 		}
 		default:{

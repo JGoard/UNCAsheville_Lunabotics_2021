@@ -51,8 +51,8 @@
 
 #define WRIST           0
 #define WRIST_CHAR      'T' //0x50
-#define WRIST_PWM      9 //11
-#define WRIST_DIR      6 // 5
+#define WRIST_PWM      9 
+#define WRIST_DIR      6 
 #define WRIST_CS       24
 #define WRIST_LOW_LIMIT 1100
 #define WRIST_HIGH_LIMIT 3000
@@ -62,15 +62,14 @@
 
 #define ELBOW           1
 #define ELBOW_CHAR      'P' //0x54
-#define ELBOW_PWM       11//9
-#define ELBOW_DIR       5//6
+#define ELBOW_PWM       11
+#define ELBOW_DIR       5
 #define ELBOW_CS        25
 #define ELBOW_LOW_LIMIT 1100
 #define ELBOW_HIGH_LIMIT 3000
 #define ELBOW_LOW_LIMIT_COMP (joint_goal.data  > ELBOW_LOW_LIMIT)
 #define ELBOW_HIGH_LIMIT_COMP (joint_goal.data < ELBOW_HIGH_LIMIT)
-#define ELBOW_LIMIT ((ELBOW_LOW_LIMIT_COMP) && (ELBOW_HIGH_LIMIT_COMP))
-
+#define ELBOW_LIMIT ((ELBOW_LOW_LIMIT_COMP) && (ELBOW_HIGH_LIMIT_COMP))                                                                                                                                                                                                              
 
 #define SHOULDER        2
 #define SHOULDER_CHAR   'X' //0x58
@@ -80,7 +79,7 @@
 #define SHOULDER_LOW_LIMIT 1100
 #define SHOULDER_HIGH_LIMIT 3000
 #define SHOULDER_LOW_LIMIT_COMP (joint_goal.data > SHOULDER_LOW_LIMIT)
-#define SHOULDER_HIGH_LIMIT_COMP (<joint_goal.data  SHOULDER_HIGH_LIMIT)
+#define SHOULDER_HIGH_LIMIT_COMP (joint_goal.data < SHOULDER_HIGH_LIMIT)
 #define SHOULDER_LIMIT ((SHOULDER_LOW_LIMIT_COMP) && (SHOULDER_HIGH_LIMIT_COMP))
 
 #define HIP              3
