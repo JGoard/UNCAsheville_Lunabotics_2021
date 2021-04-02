@@ -43,8 +43,8 @@
 //Macros for velocity calc
 //////////////
 
-#define VEL_PI_CONSTANT 0.15*pi/180 //R*PI /180
-#define PULSES_PER_REV 300 //Due to it being measured as a rising edge, if otherwise such as changing, it would be 600
+#define VEL_PI_CONSTANT pi*.75^2 //R*PI /180
+#define PULSES_PER_REV 900 //Due to it being measured as a rising edge, if otherwise such as changing, it would be 600
 #define METER_PER_PULSE .00314159 //Amount of distance per pulse .003141 meters/pulse... MPP = Circum/Pulse
 #define PULSE_PER_METER 318.36 //These are how many pulses there will be in a meters worth of travel for each wheel based off of rising edge
 #define VELOCITY_CALC_TIMER 10000 //100 HZ
@@ -55,6 +55,8 @@
 #define MID_VEL_CONST   currentmidCount - previousmidCount
 #define BACK_VEL_CONST  currentbackCount - previousbackCount
 
+#define NTICK 0.053 //Multiply this number by number of ticks per sample 
+                    //To get Velocit (m/s)
 
 
 ////////////////
