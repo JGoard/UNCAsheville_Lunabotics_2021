@@ -15,6 +15,8 @@ extern volatile uint16_t targetPose [ARM_DOF];
 uint16_t errorAccumulator[ARM_DOF][ACCUM_FULL] = {INIT};
 int errorParse = INIT;
 
+extern volatile bool armSafe;
+
 //char Dec_to_Char[8]; 
 
 
@@ -63,31 +65,41 @@ void PI_control(int node){
     int target_PWM;
     int node_dir;
     int node_pwm;
+    bool protectionSwitch[4]; //Allows for PWM to occur if in right range
     float error = (targetPose[node] - encoderPositions[node]); 
 
      switch(node){
         case WRIST:{
-            node_dir = WRIST_DIR;
+            node_dir = WRIST_DIR;// a usable PWM level, if it's not acceptable it falls through
             node_pwm = WRIST_PWM;
-            //nh.logwarn("WRIST");
+            protectionSwitch[node] = true; //
+            //nh.logwarn("WRIST");          
             break;
         }
         case ELBOW:{
             node_dir = ELBOW_DIR;
             node_pwm = ELBOW_PWM;
-            //nh.logwarn("ELBOW");
+            protectionSwitch[node] = true;  
+            //nh.logwarn("ELBOW");           
             break;
         }
         case SHOULDER:{
             node_dir = SHOULDER_DIR;
             node_pwm = SHOULDER_PWM;
-            //nh.logwarn("SHOULDER");
+            protectionSwitch[node] = true; 
+            //nh.logwarn("SHOULDER");           
             break;
         }
         case HIP:{
+           
             node_dir = HIP_DIR;
             node_pwm = HIP_PWM;
+            protectionSwitch[node] = true; 
             //nh.logwarn("HIP");
+            break;
+        }
+        default: {
+            //nh.logwarn("ASS");
             break;
         }
      }
@@ -107,6 +119,57 @@ void PI_control(int node){
         errorParse = INIT;
     }
     
-    target_PWM = (int)(Kp*error + Ki*arraySum(errorAccumulator[WRIST]));
+
+    target_PWM = (int)(Kp*error);// + Ki*arraySum(errorAccumulator[WRIST]));
     analogWrite(node_pwm, target_PWM);
+            
+
+        
+                            
+       
+    
+    
+    
+}
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Function Header: Turns off write to arm and locks up
+// MCU until reset
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void armcurrentProtection(){
+
+ for (int node = WRIST_PWM; node  <= HIP_PWM; node++)
+    {
+       analogWrite(node, TURN_OFF);
+
+    }
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Function Header: Monitors current of arm
+//
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void monitorarmCurrent(){
+
+   /*  int armCurs[ARM_DOF];
+
+    armCurs[WRIST] = analogRead(); //Wrist //Need to inclide Analog reads for current sense pins here
+    armCurs[ELBOW] = analogRead(); //Elbow
+    armCurs[SHOULDER] = analogRead(); //Shoulder
+    armCurs[HIP] = analogRead(); //Hip 
+
+    for (int node = INIT; node  <= ARM_DOF; node++)
+        {
+            if (armCurs[node] >= FAULT_CURRENT){
+                armSafe = false; //turns off all arms and encoders
+            }
+        }
+     */
+
 }

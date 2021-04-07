@@ -9,7 +9,7 @@ extern ros::NodeHandle  nh;
 extern volatile arm_handler::arm_msg arm_pose;
 
 char byteOut[ARM_DOF]={WRIST_CHAR, ELBOW_CHAR, SHOULDER_CHAR, HIP_CHAR};
-uint16_t encoderPositions[ARM_DOF] = {0,0,0,0};
+uint16_t encoderPositions[ARM_DOF];
 
 
 uint16_t byteIn;
