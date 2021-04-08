@@ -1,5 +1,9 @@
 # Lunabotics Github for Backhoe Arm and Wheel Assemblies
 
+4/8/2021
+ ROS Odometry control has been given to at least one side of the rover, needs pins for rovers other side of motor control. 
+ Wheel Node Teensy will now control hardware interrupts from a hall effect channel of DC motors driving rover to gain an accurate pose.
+ 
 
 3/25/2021
  Teensy Arm Node is setup now to communicate with multiple encoders, as well as having dualshock4 integration with ROS in order to control it (creds to Nick Schneider)
@@ -10,7 +14,6 @@
  Currently in middle of creating advertising service for to control motors w.r.t current encoder positions
  and values.
 
- Wheel Node(s) are in development for communication with ROS
  
  
  
