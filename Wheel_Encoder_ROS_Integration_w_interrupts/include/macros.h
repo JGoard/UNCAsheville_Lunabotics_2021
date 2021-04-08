@@ -7,31 +7,31 @@
 ///////////////
 //Macro Pinouts for  Front Wheel Encoder Chip
 ///////////////
-#define F_HALL_CHANNEL 2
+#define FL_HALL_CHANNEL 2
 
-#define F_MOTOR_PWM 10
-#define F_MOTOR_DIR 34
-#define F_CURRENTSENSE 24
+#define FL_MOTOR_PWM 10
+#define FL_MOTOR_DIR 34
+#define FL_CURRENTSENSE 24
 
 //////////////
 //Macro Pinouts for  Mid Wheel Encoder Chip
 //////////////
 
-#define M_HALL_CHANNEL 16
+#define ML_HALL_CHANNEL 16
 
-#define M_MOTOR_PWM 37
-#define M_MOTOR_DIR 
+#define ML_MOTOR_PWM 37
+#define ML_MOTOR_DIR 
 #define M_CURRENTSENSE 41
 
 /////////////
 //Macros Pinouts for  Back Wheel Encoder Chip
 /////////////
 
-#define B_HALL_CHANNEL   25
+#define BL_HALL_CHANNEL   25
 
-#define B_MOTOR_PWM 33
-#define B_MOTOR_DIR
-#define B_CURRENTSENSE 40
+#define BL_MOTOR_PWM 33
+#define BL_MOTOR_DIR
+#define BL_CURRENTSENSE 40
 
 //////////////
 //Macros for ROS
@@ -57,7 +57,7 @@
 
 #define NTICK 0.053 //Multiply this number by number of ticks per sample 
                     //To get Velocit (m/s)
-
+#define WHEELS_PER_SIDE
 
 ////////////////
 
