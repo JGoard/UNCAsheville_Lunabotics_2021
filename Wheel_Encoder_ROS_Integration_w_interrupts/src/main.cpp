@@ -3,11 +3,13 @@
 #include "functions.h"
 #include <IntervalTimer.h>
 #include <ros.h>
-#include <std_msgs/UInt16.h>
+#include <std_msgs/Float32.h>
 
 ros::NodeHandle  nh;
-std_msgs::UInt16 wheelCount;
-ros::Publisher feedback("wheelCount", &wheelCount);
+std_msgs::Float32 rightcurr_Vel;
+std_msgs::Float32 leftcurr_Vel;
+ros::Publisher leftvelPub("wheelCount", &leftsideVel);
+ros::Publisher rightvelPub("wheelCount", &rightsideVel);
 
 
 extern volatile int frontCount;
@@ -31,28 +33,21 @@ void setup() {
 
 void loop() {
 
-    if (printFront){
-        //Serial.print("Front Count: ");
-        //Serial.println(frontCount);
-        wheelCount.data = frontCount;
-        printFront = false;
-
-    }
-
-    if(printMid){
-        //Serial.print("Mid Count: ");
-        //Serial.println(midCount);
-        printMid = false;
-    }
-
-    if(printBack){
-        //Serial.print("Back Count: ");
-       // Serial.println(backCount);
-        printBack = false;
-    }
 
 
-        feedback.publish(&wheelCount); //publishes only frontCount currently
+
+
+
+
+
+
+
+
+
+
+
+    leftvelPub.publish(&leftsideVel); //publishes only frontCount currently
+    rightvelPub.publish(&rightsideVel); 
         delay(3);
         nh.spinOnce();
 

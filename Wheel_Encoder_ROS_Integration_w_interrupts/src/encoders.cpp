@@ -16,11 +16,12 @@ bool printFront = false;
 bool printMid = false;
 bool printBack = false;
 IntervalTimer velCalc;
-float frontVelocity;
-float midVelocity;
-float backVelocity;
 
+extern std_msgs::Float32 rightcurr_Vel;
+extern std_msgs::Float32 leftcurr_Vel;
 
+std_msgs::Float32 leftsidecurr_Vel;
+std_msgs::Float32 rightsidecurr_Vel;
 
 //////////////
 //Encoder Pin initialization
@@ -61,14 +62,8 @@ void init_encoderCounter(void){
 //////////////
 
 void frontEncoderCount(void){
-
-  
-
 frontCount++;
 printFront = true;
-
-
-
 }
 
 //////////////
@@ -76,14 +71,8 @@ printFront = true;
 //////////////
 
 void midEncoderCount(void){
-
-  
-
 midCount++;
 printMid = true;
-
-
-
 }
 
 //////////////
@@ -91,14 +80,8 @@ printMid = true;
 //////////////
 
 void backEncoderCount(void){
-
-  
-
 backCount++;
 printBack = true;
-
-
-
 }
 
 
@@ -117,18 +100,26 @@ void calcVelocity(){ //Calculating at 100Hz sampling
     backVelocity = BACK_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT; */
 
     frontVelocity = NTICK * currentfrontCount; //in m/s so will be a float
+    midVelocity = NTICK * currentmidCount;
+    backVelocity = NTICK * currentbackCount;
     
     /* FRONT_VEL_CONSTANT/PULSE_PER_METER;
     midVelocity = MID_VEL_CONSTANT/PULSE_PER_METER; 
     backVelocity = BACK_VEL_CONSTANT/PULSE_PER_METER; */
 
     //Not sure which of the ones to do above would work 
-
-
+    leftsidecurr_Vel = frontVelocity + midVelocity + backVelocity;
+    leftsidecurr_Vel /= WHEELS_PER_SIDE;
 
     previousfrontCount = currentfrontCount;
     previousmidCount = currentmidCount;
     previousbackCount = currentbackCount;
+    
+    currentfrontCount = INIT;
+    currentmidCount   = INIT;
+    currentbackCount  = INIT; 
+
+    
   
 
 

@@ -57,7 +57,7 @@
 
 #define NTICK 0.053 //Multiply this number by number of ticks per sample 
                     //To get Velocit (m/s)
-#define WHEELS_PER_SIDE
+#define WHEELS_PER_SIDE 3
 
 ////////////////
 
