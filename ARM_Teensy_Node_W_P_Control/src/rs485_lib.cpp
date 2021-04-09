@@ -88,17 +88,17 @@ void pollEncoder(void){
 void RS485Transmit_Addr(void){
 
    if (ENCODERS_CYCLED){
-      //nh.logwarn("CYCLED");
+      nh.logwarn("CYCLED");
       encoderNodeCounter = INIT;
     }
     
   if ((encoderFlag)&&(transStatus==INIT)){
-    //nh.loginfo("RS485_TX");
+    nh.loginfo("RS485_TX");
 
     RS485Transmit_EN();
     //delay(10);
     Serial1.write(byteOut[encoderNodeCounter]);      // Send byte to encoder
-    arm_pose.joint = byteOut[encoderNodeCounter++];
+    arm_pose.joint = byteOut[encoderNodeCounter];
 
    
 
@@ -123,7 +123,7 @@ void RS485Receive_Pos(void){
 
   if (Serial1.available()&&(transStatus!=TRANS_END))       //Look for data from encoder
    {
-    //h.loginfo("RS485_RX");
+    nh.loginfo("RS485_RX");
     digitalWrite(Pin13LED, LOW);        // Off momentarily
     byteIn = Serial1.read();     // Read received byte
     //delay(10);
@@ -144,8 +144,8 @@ void RS485Receive_Pos(void){
           data = data & HIGHBYTE_MASK; //Gets rid of top 2 checksum bits
           arm_pose.data = data >> SHIFT_RES;
           encoderPositions[encoderNodeCounter-1] = arm_pose.data; //records data from W,E,S,H and assigns to 
-          //encoderNodeCounter++; //Increment node address array
-          //nh.logwarn("CONCAT");
+          encoderNodeCounter++; //Increment node address array
+          nh.logwarn("CONCAT");
           
 
           break;                                                  //each variable

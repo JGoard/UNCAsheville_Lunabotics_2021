@@ -15,7 +15,7 @@
 
 #define SHIFT_RES 2
 
-#define FREQ 1000000
+#define FREQ 100000
 
 #define HIGHBYTE_MASK 16383
 

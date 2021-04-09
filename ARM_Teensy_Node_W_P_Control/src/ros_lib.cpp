@@ -41,19 +41,15 @@ void ros_init(void){
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void ros_update(void){ 
 
-	if (PUBLISH){
-         // nh.logwarn("CONCAT");
+		if(TRANS_END==transStatus){
+          nh.logwarn("Update");
           feedback.publish(&arm_pose);
 		  nh.spinOnce();
-          delay(10);
-
-		  arm_pose.joint = 20;
-		  arm_pose.data = analogRead(A13);
-
-		  feedback.publish(&arm_pose);
-		  nh.spinOnce();
-          delay(10);
-        }
+          delay(3);
+		}
+	/* 	  arm_pose.joint = 20;
+		  arm_pose.data = analogRead(A13); */
+        
 
 }
 

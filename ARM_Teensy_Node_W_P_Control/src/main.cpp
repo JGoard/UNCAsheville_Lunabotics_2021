@@ -55,7 +55,7 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
     }
 
   ros_update();
-  nh.spinOnce();
+  //nh.spinOnce();
 }
 
 
@@ -64,7 +64,7 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
 
 
 
-/* void init_pin(void){
+void init_pin(void){
   pinMode(WRIST_PWM,OUTPUT);
   pinMode(WRIST_DIR,OUTPUT);
   pinMode(ELBOW_PWM,OUTPUT);
@@ -75,4 +75,4 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
   pinMode(HIP_DIR,OUTPUT);
   pinMode(A13,INPUT); // Current sense pin, probably won't work due to PWM being wacky
   
-} */
+}
