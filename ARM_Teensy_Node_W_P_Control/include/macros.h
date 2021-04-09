@@ -15,11 +15,10 @@
 
 #define SHIFT_RES 2
 
-#define FREQ 100000
 
 #define HIGHBYTE_MASK 16383
 
-#define ENCODER_TIME_POLL 10000
+#define ENCODER_TIME_POLL 100000
 #define ENCODERS_CYCLED encoderNodeCounter == 4
 
 #define TURN_OFF 0

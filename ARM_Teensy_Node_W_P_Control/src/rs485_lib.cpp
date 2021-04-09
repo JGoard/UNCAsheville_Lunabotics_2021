@@ -143,7 +143,7 @@ void RS485Receive_Pos(void){
           data = word(nodehighByte, nodelowByte);
           data = data & HIGHBYTE_MASK; //Gets rid of top 2 checksum bits
           arm_pose.data = data >> SHIFT_RES;
-          encoderPositions[encoderNodeCounter-1] = arm_pose.data; //records data from W,E,S,H and assigns to 
+          encoderPositions[encoderNodeCounter] = arm_pose.data; //records data from W,E,S,H and assigns to 
           encoderNodeCounter++; //Increment node address array
           nh.logwarn("CONCAT");
           
