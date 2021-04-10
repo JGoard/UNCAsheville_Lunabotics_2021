@@ -140,7 +140,8 @@ void RS485Receive_Pos(void){
 
         case HIGHBYTE:
           nodehighByte = byteIn; 
-          data = word(nodehighByte, nodelowByte);
+          //data = word(nodehighByte, nodelowByte);
+          data = (nodehighByte << 8) + nodelowByte);
           data = data & HIGHBYTE_MASK; //Gets rid of top 2 checksum bits
           arm_pose.data = data >> SHIFT_RES;
           encoderPositions[encoderNodeCounter] = arm_pose.data; //records data from W,E,S,H and assigns to 
