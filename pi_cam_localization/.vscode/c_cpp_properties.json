@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/lunabotics/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/lunabotics/catkin_ws/src/depth_nav_tools/cliff_detector/include/**",
+        "/home/lunabotics/catkin_ws/src/ddynamic_reconfigure/include/**",
+        "/home/lunabotics/catkin_ws/src/depth_nav_tools/depth_sensor_pose/include/**",
+        "/home/lunabotics/catkin_ws/src/depth_nav_tools/laserscan_kinect/include/**",
+        "/home/lunabotics/catkin_ws/src/depth_nav_tools/nav_layer_from_points/include/**",
+        "/home/lunabotics/catkin_ws/src/pi_cam_localization/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
