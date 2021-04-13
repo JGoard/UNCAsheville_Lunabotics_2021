@@ -6,8 +6,8 @@
 #include <std_msgs/Float32.h>
 
 ros::NodeHandle  nh;
-std_msgs::Float32 rightcurr_Vel;
-std_msgs::Float32 leftcurr_Vel;
+std_msgs::Float32 rightsidecurr_Vel;
+std_msgs::Float32 leftsidecurr_Vel;
 ros::Publisher leftvelPub("wheelCount", &leftsideVel);
 ros::Publisher rightvelPub("wheelCount", &rightsideVel);
 
@@ -33,21 +33,8 @@ void setup() {
 
 void loop() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    leftvelPub.publish(&leftsideVel); //publishes only frontCount currently
-    rightvelPub.publish(&rightsideVel); 
+    leftvelPub.publish(&leftsidecurr_Vel); //publishes only frontCount currently
+    rightvelPub.publish(&rightsidecurr_Vel); 
         delay(3);
         nh.spinOnce();
 
