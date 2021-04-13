@@ -141,7 +141,7 @@ void RS485Receive_Pos(void){
         case HIGHBYTE:
           nodehighByte = byteIn; 
           //data = word(nodehighByte, nodelowByte);
-          data = (nodehighByte << 8) + nodelowByte);
+          data = ((nodehighByte << 8) + nodelowByte);
           if (cui_checksum(data)){
             data = data & HIGHBYTE_MASK; //Gets rid of top 2 checksum bits
             arm_pose.data = data >> SHIFT_RES;
