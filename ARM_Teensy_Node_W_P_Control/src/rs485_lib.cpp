@@ -142,12 +142,14 @@ void RS485Receive_Pos(void){
           nodehighByte = byteIn; 
           //data = word(nodehighByte, nodelowByte);
           data = (nodehighByte << 8) + nodelowByte);
-          data = data & HIGHBYTE_MASK; //Gets rid of top 2 checksum bits
-          arm_pose.data = data >> SHIFT_RES;
-          encoderPositions[encoderNodeCounter] = arm_pose.data; //records data from W,E,S,H and assigns to 
-          encoderNodeCounter++; //Increment node address array
-          nh.logwarn("CONCAT");
-          
+          if (cui_checksum(data)){
+            data = data & HIGHBYTE_MASK; //Gets rid of top 2 checksum bits
+            arm_pose.data = data >> SHIFT_RES;
+            encoderPositions[encoderNodeCounter] = arm_pose.data; //records data from W,E,S,H and assigns to 
+            encoderNodeCounter++; //Increment node address array
+            nh.logwarn("CONCAT");
+          }
+          else nh.logerror("CUI checksum failed");
 
           break;                                                  //each variable
 
@@ -162,4 +164,14 @@ void RS485Receive_Pos(void){
 
 else transStatus = INIT;
 
+}
+
+
+bool cui_checksum(unint16_t data){
+  
+  bool K1 = !((data&H5)^(data&H3)^(data&H1)^(data&L7)^(data&L5)^(data&L3)^(data&L1));
+  bool K0 = !((data&H4)^(data&H2)^(data&H0)^(data&L6)^(data&L4)^(data&L2)^(data&L0));
+
+  if ((K1==(data&H7))&&(K0==(data&H6))) return true;
+  else return false;
 }

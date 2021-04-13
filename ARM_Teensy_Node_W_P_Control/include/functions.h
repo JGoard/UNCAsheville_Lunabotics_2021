@@ -15,6 +15,7 @@ void RS485Transmit_EN(void);
 void RS485Transmit_Addr(void);
 void RS485Receive_Pos(void);
 void RS485ReceiveParse(void);
+bool cui_checksum(unint16_t);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

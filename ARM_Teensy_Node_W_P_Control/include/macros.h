@@ -2,6 +2,26 @@
 #ifndef MACROS_H_
 #define MACROS_H_
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//CHECKSUM macros:
+#define L7      1<<7
+#define L6      1<<6
+#define L5      1<<5
+#define L4      1<<4
+#define L3      1<<3
+#define L2      1<<2
+#define L1      1<<1
+#define L0      1
+
+#define H7     L7<<8
+#define H6     L6<<8
+#define H5     L5<<8
+#define H4     L4<<8
+#define H3     L3<<8
+#define H2     L2<<8
+#define H1     L1<<8
+#define H0     L0<<8
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //MACROS FOR STATES AND OTHER FUNKY NUMBERS
 #define INIT  0
@@ -36,10 +56,9 @@
 #define Re        2 
 #define De        3
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // joint macros:
-
-
 /* 24- Motor 2 Current Sensor
 25- Motor 3 Current Sensor
 26- Motor 4 Current Sensor
@@ -122,4 +141,6 @@
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 #endif /* MACROS_H_ */
