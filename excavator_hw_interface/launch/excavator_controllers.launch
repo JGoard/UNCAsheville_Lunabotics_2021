@@ -1,0 +1,67 @@
+<launch>
+
+  <param name="robot_description" command="cat $(find arm_simulation_urdf)/urdf/arm_simulation_urdf.urdf"/>
+
+  <rosparam file="$(find excavator_hw_interface)/config/excavator_controllers.yaml" command="load"/>
+
+  <node name="hardware_interface"  pkg="excavator_hw_interface" type="excavator_hw_interface_node" output="screen"/>
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
+                    args="/excavator_position_controller"/>
+    <!--args="
+          /excavator/controller/state
+          /excavator/controller/position/W
+          /excavator/controller/position/SHOULDER
+          /excavator/controller/position/ELBOW
+          /excavator/controller/position/WRIST
+      "
+    -->
+  <param name="~moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
+  <!--param name="~moveit_controller_manager" value="moveit_ros_control_interface::MoveItMultiControllerManager" /--> 
+  <param name="ros_control_namespace" value="/"/>
+  <param name="robot_description_semantic" textfile="$(find excavator_moveit_config_r04)/config/arm_simulation_urdf.srdf" />
+
+  <group ns="robot_description_planning">
+    <rosparam command="load" file="$(find excavator_hw_interface)/config/joint_limits.yaml"/>
+  </group>
+
+  <group ns="robot_description_kinematics">
+    <rosparam command="load" file="$(find excavator_moveit_config_r04)/config/kinematics.yaml"/>
+  </group>
+
+  <include file="$(find excavator_moveit_config_r04)/launch/ompl_planning_pipeline.launch.xml" />
+
+  <param name="moveit_manage_controllers" value="true"/>
+  <param name="trajectory_execution/allowed_execution_duration_scaling" value="1.2"/>
+  <param name="trajectory_execution/allowed_goal_duration_margin" value="0.5"/>
+  <param name="trajectory_execution/allowed_start_tolerance" value="0.01"/>
+
+  <include file="$(find excavator_moveit_config_r04)/launch/arm_simulation_urdf_moveit_controller_manager.launch.xml" />
+
+  <node name="move_group" launch-prefix="" pkg="moveit_ros_move_group" type="move_group" respawn="false" output="screen" args="--debug">
+    <!-- Set the display variable, in case OpenGL code is used internally -->
+    <env name="DISPLAY" value="$(optenv DISPLAY :0)" />
+
+    <param name="allow_trajectory_execution"  value="true"/>
+    <param name="max_safe_path_cost"          value="1"/>
+    <param name="jiggle_fraction"             value="0.05" />
+    <param name="capabilities"                value=""/>
+    <param name="disable_capabilities"        value=""/>
+
+
+    <!-- Publish the planning scene of the physical robot so that rviz plugin can know actual robot -->
+    <param name="planning_scene_monitor/publish_planning_scene"     value="true" />
+    <param name="planning_scene_monitor/publish_geometry_updates"   value="true" />
+    <param name="planning_scene_monitor/publish_state_updates"      value="true" />
+    <param name="planning_scene_monitor/publish_transforms_updates" value="true" />
+  </node>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <include file="$(find excavator_moveit_config_r04)/launch/moveit_rviz.launch">
+    <arg name="rviz_config" value="$(find excavator_moveit_config_r04)/launch/moveit.rviz"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+</launch>

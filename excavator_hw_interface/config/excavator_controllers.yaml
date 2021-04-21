@@ -1,0 +1,71 @@
+move_group:
+  controller_list:
+  - name: excavator_position_controller
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - waist
+      - shoulder
+      - elbow
+      - wrist
+  # - name: excavator_effort_controller
+  #   action_ns: follow_joint_trajectory
+  #   default: True
+  #   type: FollowJointTrajectory
+  #   joints:
+  #     - waist
+  #     - shoulder
+  #     - elbow
+  #     - wrist
+excavator_position_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - waist
+    - shoulder
+    - elbow
+    - wrist
+  # constraints:
+  #   waist:
+  #     trajectory: 0.05
+  #     goal: 0.05
+  #   shoulder:
+  #     trajectory: 0.05
+  #     goal: 0.05
+  #   elbow:
+  #     trajectory: 0.05
+  #     goal: 0.05
+  #   wrist:
+  #     trajectory: 0.05
+  #     goal: 0.05
+  gains:
+    waist:    {p: 1,  d: 0, i: 0, i_clamp: 1}
+    shoulder: {p: 1,  d: 0, i: 0, i_clamp: 1}
+    elbow:    {p: 1,  d: 0, i: 0, i_clamp: 1}
+    wrist:    {p: 1,  d: 0, i: 0, i_clamp: 1}
+
+excavator_effort_controller:
+  type: "effort_controllers/JointTrajectoryController"
+  joints:
+    - waist
+    - shoulder
+    - elbow
+    - wrist
+  # constraints:
+  #   waist:
+  #     trajectory: 0.05
+  #     goal: 0.05
+  #   shoulder:
+  #     trajectory: 0.05
+  #     goal: 0.05
+  #   elbow:
+  #     trajectory: 0.05
+  #     goal: 0.05
+  #   wrist:
+  #     trajectory: 0.05
+  #     goal: 0.05
+  gains:
+    waist:    {p: 1,  d: 0, i: 0, i_clamp: 1}
+    shoulder: {p: 1,  d: 0, i: 0, i_clamp: 1}
+    elbow:    {p: 1,  d: 0, i: 0, i_clamp: 1}
+    wrist:    {p: 1,  d: 0, i: 0, i_clamp: 1}

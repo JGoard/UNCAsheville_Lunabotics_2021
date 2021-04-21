@@ -1,0 +1,65 @@
+ joint_limits:
+   waist:
+#      has_position_limits: false
+#      has_velocity_limits: false
+#      has_acceleration_limits: false
+#      has_effort_limits: false
+    has_position_limits: true
+    min_position: -1.5708
+    max_position: 1.5708
+    has_velocity_limits: true
+    max_velocity: 2.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+    has_jerk_limits: true
+    max_jerk: 100.0
+    has_effort_limits: true
+    max_effort: 1.0
+   shoulder:
+    #  has_position_limits: false
+    #  has_velocity_limits: false
+    #  has_acceleration_limits: false
+    #  has_effort_limits: false
+    has_position_limits: true
+    min_position: -1.5708
+    max_position: 1.5708
+    has_velocity_limits: true
+    max_velocity: 2.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+    has_jerk_limits: true
+    max_jerk: 100.0
+    has_effort_limits: true
+    max_effort: 1.0
+   elbow:
+    #  has_position_limits: false
+    #  has_velocity_limits: false
+    #  has_acceleration_limits: false
+    #  has_effort_limits: false
+    has_position_limits: true
+    min_position: -1.5708
+    max_position: 1.5708
+    has_velocity_limits: true
+    max_velocity: 2.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+    has_jerk_limits: true
+    max_jerk: 100.0
+    has_effort_limits: true
+    max_effort: 1.0
+   wrist:
+    #  has_position_limits: false
+    #  has_velocity_limits: false
+    #  has_acceleration_limits: false
+    #  has_effort_limits: false
+    has_position_limits: true
+    min_position: -1.5708
+    max_position: 1.5708
+    has_velocity_limits: true
+    max_velocity: 2.0
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+    has_jerk_limits: true
+    max_jerk: 100.0
+    has_effort_limits: true
+    max_effort: 1.0
