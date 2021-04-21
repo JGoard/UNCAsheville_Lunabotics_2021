@@ -1,27 +1,30 @@
 #include <Arduino.h>
 #include "macros.h"
+#include <std_msgs/Float32.h>
 #include "functions.h"
 #include <IntervalTimer.h>
 
-volatile int currentfrontCount = INIT;
-volatile int currentmidCount = INIT;
-volatile int currentbackCount = INIT;
+volatile int currentfrontLeftCount = INIT;
+volatile int currentmidLeftCount = INIT;
+volatile int currentbackLeftCount = INIT;
+
+volatile int currentfrontRightCount = INIT;
+volatile int currentmidRightCount = INIT;
+volatile int currentbackRightCount = INIT;
 
 volatile int previousfrontCount = INIT;
 volatile int previousmidCount = INIT;
 volatile int previousbackCount = INIT;
+volatile bool publish = false;
 
 
-bool printFront = false;
-bool printMid = false;
-bool printBack = false;
 IntervalTimer velCalc;
 
-extern std_msgs::Float32 rightcurr_Vel;
-extern std_msgs::Float32 leftcurr_Vel;
+extern std_msgs::Float32  rightcurr_Vel;
+extern std_msgs::Float32  leftcurr_Vel;
 
-std_msgs::Float32 leftsidecurr_Vel;
-std_msgs::Float32 rightsidecurr_Vel;
+float leftsidecurr_Vel;
+float rightsidecurr_Vel;
 
 //////////////
 //Encoder Pin initialization
@@ -31,28 +34,47 @@ std_msgs::Float32 rightsidecurr_Vel;
 //////////////
 void init_encoderCounter(void){
   
-   pinMode(F_HALL_CHANNEL, INPUT_PULLUP);
-   pinMode(M_HALL_CHANNEL, INPUT_PULLUP);
-   pinMode(B_HALL_CHANNEL, INPUT_PULLUP);
-  
-   attachInterrupt(F_HALL_CHANNEL, frontEncoderCount, RISING); //attaching interrupt functions to 
-   attachInterrupt(M_HALL_CHANNEL, midEncoderCount, RISING);   //these pins
-   attachInterrupt(B_HALL_CHANNEL, backEncoderCount, RISING);  //Currently, these wheels will spin 300 counts
-                                                               //per revolution
+   pinMode(FL_HALL_CHANNEL, INPUT_PULLUP);
+   pinMode(ML_HALL_CHANNEL, INPUT_PULLUP);
+   pinMode(BL_HALL_CHANNEL, INPUT_PULLUP);
+   pinMode(FR_HALL_CHANNEL, INPUT_PULLUP);
+   pinMode(MR_HALL_CHANNEL, INPUT_PULLUP);
+   pinMode(BR_HALL_CHANNEL, INPUT_PULLUP);
+
+
+   attachInterrupt(FL_HALL_CHANNEL, frontleftEncoderCount, RISING); //attaching interrupt functions to 
+   attachInterrupt(ML_HALL_CHANNEL, midleftEncoderCount, RISING);   //these pins
+   attachInterrupt(BL_HALL_CHANNEL, backleftEncoderCount, RISING);  //Currently, these wheels will spin 900 counts
+   attachInterrupt(FR_HALL_CHANNEL, frontrightEncoderCount, RISING); //attaching interrupt functions to 
+   attachInterrupt(MR_HALL_CHANNEL, midrightEncoderCount, RISING);   //these pins
+   attachInterrupt(BR_HALL_CHANNEL, backrightEncoderCount, RISING);                                                            //per revolution
                                                                //If resolution would like to be increased, change to CHANGE
 
+                                         //Currently, these wheels will spin 900 counts
+                                                               //per revolution
+                                                               //If resolution would like to be increased, change to CHANGE 
+    pinMode(LEFT_SIDE_DIR,OUTPUT);
+    pinMode(FL_MOTOR_PWM, OUTPUT);
+    pinMode(ML_MOTOR_PWM, OUTPUT);
+    pinMode(BL_MOTOR_PWM, OUTPUT);
 
-    pinMode(F_MOTOR_PWM, OUTPUT);
-    pinMode(F_MOTOR_DIR,OUTPUT);
+    pinMode(RIGHT_SIDE_DIR, OUTPUT);
+    pinMode(FR_MOTOR_PWM, OUTPUT);
+    pinMode(MR_MOTOR_PWM, OUTPUT);
+    pinMode(BR_MOTOR_PWM, OUTPUT);
 
-    pinMode(M_MOTOR_PWM, OUTPUT);
-   // pinMode(M_MOTOR_DIR, OUTPUT);
 
-    pinMode(B_MOTOR_PWM, OUTPUT);
-   // pinMode(B_MOTOR_DIR, OUTPUT);
 
-    digitalWrite(F_MOTOR_DIR,HIGH);
-    digitalWrite(F_MOTOR_PWM,100);
+
+
+/*     digitalWrite(FL_MOTOR_PWM,100);
+    digitalWrite(ML_MOTOR_PWM,100);
+    digitalWrite(BL_MOTOR_PWM,100);
+
+    digitalWrite(FR_MOTOR_PWM,100);
+    digitalWrite(MR_MOTOR_PWM,100);
+    digitalWrite(BR_MOTOR_PWM,100); */
+
     velCalc.begin(calcVelocity, VELOCITY_CALC_TIMER); //Currently set at 100 Hz
 
 }
@@ -61,27 +83,52 @@ void init_encoderCounter(void){
 //ISR for front wheel encoder 
 //////////////
 
-void frontEncoderCount(void){
-frontCount++;
-printFront = true;
+void frontleftEncoderCount(void){
+currentfrontLeftCount++;
+    
+
 }
 
 //////////////
 //ISR for mid wheel encoder
 //////////////
 
-void midEncoderCount(void){
-midCount++;
-printMid = true;
+void midleftEncoderCount(void){
+currentmidLeftCount++;
 }
 
 //////////////
 //ISR for back wheel encoder
 //////////////
 
-void backEncoderCount(void){
-backCount++;
-printBack = true;
+void backleftEncoderCount(void){
+currentbackLeftCount++;
+}
+
+///////////////////////////////////////////////////////
+//ISR for front wheel encoder 
+////////////////////////////////////////////////////////
+
+void frontrightEncoderCount(void){
+currentfrontRightCount++;
+    
+
+}
+
+//////////////
+//ISR for mid wheel encoder
+//////////////
+
+void midrightEncoderCount(void){
+currentmidRightCount++;
+}
+
+//////////////
+//ISR for back wheel encoder
+//////////////
+
+void backrightEncoderCount(void){
+currentbackRightCount++;
 }
 
 
@@ -99,27 +146,41 @@ void calcVelocity(){ //Calculating at 100Hz sampling
     midVelocity = MID_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT;
     backVelocity = BACK_VEL_CONSTANT * VELOCITY_SAMPLE_TIME * VEL_PI_CONSTANT; */
 
-    frontVelocity = NTICK * currentfrontCount; //in m/s so will be a float
-    midVelocity = NTICK * currentmidCount;
-    backVelocity = NTICK * currentbackCount;
+   float frontleftVelocity = NTICK * currentfrontLeftCount; //in m/s so will be a float
+   float midleftVelocity = NTICK * currentmidLeftCount;
+   float backleftVelocity = NTICK * currentbackLeftCount;
+
+   float frontrightVelocity = NTICK * currentfrontRightCount; //in m/s so will be a float
+   float midrightVelocity = NTICK * currentmidRightCount;
+   float backrightVelocity = NTICK * currentbackRightCount;
+   publish = true;
     
     /* FRONT_VEL_CONSTANT/PULSE_PER_METER;
     midVelocity = MID_VEL_CONSTANT/PULSE_PER_METER; 
     backVelocity = BACK_VEL_CONSTANT/PULSE_PER_METER; */
 
     //Not sure which of the ones to do above would work 
-    leftsidecurr_Vel = frontVelocity + midVelocity + backVelocity;
-    leftsidecurr_Vel /= WHEELS_PER_SIDE;
+    leftsidecurr_Vel = frontleftVelocity + midleftVelocity + backleftVelocity;
+    leftsidecurr_Vel = leftsidecurr_Vel / WHEELS_PER_SIDE;
 
-    previousfrontCount = currentfrontCount;
-    previousmidCount = currentmidCount;
-    previousbackCount = currentbackCount;
-    
-    currentfrontCount = INIT;
-    currentmidCount   = INIT;
-    currentbackCount  = INIT; 
+    rightsidecurr_Vel = frontrightVelocity + midrightVelocity + backrightVelocity;
+    rightsidecurr_Vel = rightsidecurr_Vel / WHEELS_PER_SIDE;
 
-    
+    leftcurr_Vel.data = leftsidecurr_Vel;
+    rightcurr_Vel.data = rightsidecurr_Vel;
+
+    previousfrontCount = currentfrontLeftCount;
+    previousmidCount = currentmidLeftCount;
+    previousbackCount = currentbackLeftCount;
+
+        
+    currentfrontLeftCount = INIT;
+    currentmidLeftCount   = INIT;
+    currentbackLeftCount  = INIT; 
+
+    currentfrontRightCount = INIT;
+    currentmidRightCount   = INIT;
+    currentbackRightCount  = INIT; 
   
 
 

@@ -12,6 +12,7 @@ extern ros::Subscriber<arm_handler::arm_msg> goal;
 //extern ros::ServiceServer<std_srvs::Empty::Request, std_srvs::Empty::Response> zero_pose;
 extern arm_handler::arm_msg arm_pose;
 extern arm_handler::arm_msg arm_goal;
+extern volatile int encoderNodeCounter;
 
 extern int transStatus;
 
@@ -41,12 +42,12 @@ void ros_init(void){
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void ros_update(void){ 
 
-		if(PUBLISH){
+		//if(PUBLISH){
           //nh.logwarn("Update");
           feedback.publish(&arm_pose);
 		  nh.spinOnce();
-          delay(3);
-		}
+          delay(5);
+		//}
 	/* 	  arm_pose.joint = 20;
 		  arm_pose.data = analogRead(A13); */
         

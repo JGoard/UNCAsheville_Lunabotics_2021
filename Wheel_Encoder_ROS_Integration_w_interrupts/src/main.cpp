@@ -8,13 +8,15 @@
 ros::NodeHandle  nh;
 std_msgs::Float32 rightcurr_Vel;
 std_msgs::Float32 leftcurr_Vel;
-ros::Publisher leftvelPub("wheelCount", &leftsideVel);
-ros::Publisher rightvelPub("wheelCount", &rightsideVel);
+
+ros::Publisher leftvelPub("LeftPubVel", &leftcurr_Vel);
+ros::Publisher rightvelPub("RightPubVel", &rightcurr_Vel);
 
 
-extern volatile int frontCount;
-extern volatile int midCount;
-extern volatile int backCount;
+extern volatile int currentfrontLeftCount;
+extern volatile int currentmidLeftCount;
+extern volatile int currentbackLeftCount;
+extern volatile bool publish;
 
 extern bool printFront;
 extern bool printMid;
@@ -27,30 +29,19 @@ void setup() {
     
     init_encoderCounter();
     ros_init();
-   //Serial.begin(9600);
 
 }
 
 void loop() {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    leftvelPub.publish(&leftsideVel); //publishes only frontCount currently
-    rightvelPub.publish(&rightsideVel); 
+    if(publish){
+    leftvelPub.publish(&leftcurr_Vel); //publishes only FL
+    rightvelPub.publish(&rightcurr_Vel); 
         delay(3);
-        nh.spinOnce();
-
+        nh.spinOnce(); 
+        publish = false;
+    }
 
 }
 

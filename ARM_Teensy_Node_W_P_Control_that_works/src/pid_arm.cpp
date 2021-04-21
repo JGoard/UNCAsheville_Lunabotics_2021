@@ -79,15 +79,15 @@ void PI_control(int node){
             break;
         }
      }
-    if (error < INIT) {       
+    if ((error < INIT)) {       
         // pin config for cw rotation
-        digitalWrite(node_dir, LOW);
+        digitalWrite(node_dir, HIGH);
         error = -error;  
            
     }
     else{
         // pin config for ccw rotation
-        digitalWrite(node_dir, HIGH);
+        digitalWrite(node_dir, LOW);
     }
     
     errorAccumulator[node][errorParse++] = int(error);
