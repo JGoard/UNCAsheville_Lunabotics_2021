@@ -15,12 +15,15 @@ class Excavator : public hardware_interface::RobotHW {
         ros::Publisher target_pose_publisher;
         ros::Subscriber current_pose_subscriber;
 
-        hardware_interface::JointStateInterface jnt_state_interface;
-        hardware_interface::PositionJointInterface jnt_pos_interface;
-        hardware_interface::EffortJointInterface jnt_eff_interface;
+        hardware_interface::JointStateInterface     jnt_state_interface;
+        hardware_interface::PositionJointInterface  jnt_pos_interface;
+        hardware_interface::VelocityJointInterface  jnt_vel_interface;
+        hardware_interface::EffortJointInterface    jnt_eff_interface;
 
-        char joint_hex_id[4] = {'T','C','P','D'};
+        const char   joint_hex_id[4] = {'T','C','P','D'};
+        const uint16_t joint_zero[4] = {2000,2000,2000,2000};
         double pos_cmd[4];
+        double vel_cmd[4];
         double eff_cmd[4];
         double pos[4];
         double vel[4];
@@ -28,17 +31,12 @@ class Excavator : public hardware_interface::RobotHW {
         
     public: 
 
-        uint16_t pose_conversion(const double);
-        double   pose_conversion(const uint16_t);
-        uint16_t effort_conversion(const double);
-
         void pose_callback(const arm_handler::arm_msg&);
         void read(void);
         void write(void);
 
         Excavator(ros::NodeHandle& nh):nh_(nh) { 
 
-            #define RMC_shift_zero_position 2000
             #define RMC_encoder_resolution  4095
             #define RMC_max_effort           255
             #define RMC_TwoPi      6.28318530718
@@ -69,6 +67,18 @@ class Excavator : public hardware_interface::RobotHW {
             jnt_pos_interface.registerHandle(pos_handle_wrist);
 
             registerInterface(&jnt_pos_interface);
+
+            hardware_interface::JointHandle vel_handle_waist(   jnt_state_interface.getHandle("waist"),     &vel_cmd[0]);
+            hardware_interface::JointHandle vel_handle_shoulder(jnt_state_interface.getHandle("shoulder"),  &vel_cmd[1]);
+            hardware_interface::JointHandle vel_handle_elbow(   jnt_state_interface.getHandle("elbow"),     &vel_cmd[2]);
+            hardware_interface::JointHandle vel_handle_wrist(   jnt_state_interface.getHandle("wrist"),     &vel_cmd[3]);
+
+            jnt_vel_interface.registerHandle(pos_handle_waist);
+            jnt_vel_interface.registerHandle(pos_handle_shoulder);
+            jnt_vel_interface.registerHandle(pos_handle_elbow);    
+            jnt_vel_interface.registerHandle(pos_handle_wrist);
+
+            registerInterface(&jnt_vel_interface);
 
             hardware_interface::JointHandle eff_handle_waist(   jnt_state_interface.getHandle("waist"),     &eff_cmd[0]);
             hardware_interface::JointHandle eff_handle_shoulder(jnt_state_interface.getHandle("shoulder"),  &eff_cmd[1]);

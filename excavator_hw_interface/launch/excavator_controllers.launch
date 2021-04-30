@@ -7,7 +7,9 @@
   <node name="hardware_interface"  pkg="excavator_hw_interface" type="excavator_hw_interface_node" output="screen"/>
 
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
-                    args="/excavator_position_controller"/>
+                    args="/excavator_position_controller
+                          /joint_state_controller
+                    "/>
     <!--args="
           /excavator/controller/state
           /excavator/controller/position/W
@@ -38,6 +40,8 @@
 
   <include file="$(find excavator_moveit_config_r04)/launch/arm_simulation_urdf_moveit_controller_manager.launch.xml" />
 
+  <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" />
+
   <node name="move_group" launch-prefix="" pkg="moveit_ros_move_group" type="move_group" respawn="false" output="screen" args="--debug">
     <!-- Set the display variable, in case OpenGL code is used internally -->
     <env name="DISPLAY" value="$(optenv DISPLAY :0)" />
@@ -45,7 +49,7 @@
     <param name="allow_trajectory_execution"  value="true"/>
     <param name="max_safe_path_cost"          value="1"/>
     <param name="jiggle_fraction"             value="0.05" />
-    <param name="capabilities"                value=""/>
+    <param name="capabilities"                value="move_group/ExecuteTaskSolutionCapability"/><!--redundant-->
     <param name="disable_capabilities"        value=""/>
 
 
@@ -56,12 +60,19 @@
     <param name="planning_scene_monitor/publish_transforms_updates" value="true" />
   </node>
 
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+  <!--node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/-->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
-  <include file="$(find excavator_moveit_config_r04)/launch/moveit_rviz.launch">
+  <node pkg="tf2_ros" type="static_transform_publisher" name="virtual_joint_broadcaster" args="0 0 0 0 0 0 world virtual_link" />
+
+  <!--include file="$(find excavator_moveit_config_r04)/launch/moveit_rviz.launch">
     <arg name="rviz_config" value="$(find excavator_moveit_config_r04)/launch/moveit.rviz"/>
     <arg name="debug" value="false"/>
-  </include>
+  </include-->
+   <node name="rviz_tasks" pkg="rviz" type="rviz" respawn="false" args="-d $(find excavator_hw_interface)/config/tasks_and_motion_planning.rviz">
+    <rosparam command="load" file="$(find excavator_moveit_config_r04)/config/kinematics.yaml"/>
+  </node>
+
+  <!--node name="excavator_task_constructor" pkg="moveit_task_constructor_demo" type="excavator_modular"/-->
 
 </launch>

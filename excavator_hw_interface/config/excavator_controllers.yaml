@@ -65,7 +65,10 @@ excavator_effort_controller:
   #     trajectory: 0.05
   #     goal: 0.05
   gains:
-    waist:    {p: 1,  d: 0, i: 0, i_clamp: 1}
-    shoulder: {p: 1,  d: 0, i: 0, i_clamp: 1}
-    elbow:    {p: 1,  d: 0, i: 0, i_clamp: 1}
-    wrist:    {p: 1,  d: 0, i: 0, i_clamp: 1}
+    waist:    {p: 0.01,  d: 0, i: 0, i_clamp: 1}
+    shoulder: {p: 0.01,  d: 0, i: 0, i_clamp: 1}
+    elbow:    {p: 0.01,  d: 0, i: 0, i_clamp: 1}
+    wrist:    {p: 0.01,  d: 0, i: 0, i_clamp: 1}
+joint_state_controller:
+  type: "joint_state_controller/JointStateController"
+  publish_rate: 50  
