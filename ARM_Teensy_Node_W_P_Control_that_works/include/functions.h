@@ -28,7 +28,7 @@ void goal_callback(const arm_handler::arm_msg &goal);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // PID control functions
-void PI_control(int);
+void ROS_controller(int);
 void accumError(void);
 float arraySum(uint16_t);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

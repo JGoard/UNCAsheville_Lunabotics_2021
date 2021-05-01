@@ -33,73 +33,51 @@ float arraySum (uint16_t array[ACCUM_FULL]){
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Function Header: PI_control
-//
-//
+// Function Header: ROS_controller
+// Modified PI_control function to recieve PWM commands 
+// from higher level controller
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-void PI_control(int node){ 
+void ROS_controller(int node){ 
     int target_PWM;
     int node_dir;
     int node_pwm;
-    bool protectionSwitch[4]; //Allows for PWM to occur if in right range
-    float error = (targetPose[node] - encoderPositions[node]); 
-
      switch(node){
         case WRIST:{
-            node_dir = WRIST_DIR;// a usable PWM level, if it's not acceptable it falls through
-            node_pwm = WRIST_PWM;
-            protectionSwitch[node] = true; //
-           // nh.logwarn("WRIST");          
+            node_dir = WRIST_DIR;
+            node_pwm = WRIST_PWM;    
             break;
         }
         case ELBOW:{
             node_dir = ELBOW_DIR;
-            node_pwm = ELBOW_PWM;
-            protectionSwitch[node] = true;  
-           // nh.logwarn("ELBOW");           
+            node_pwm = ELBOW_PWM;          
             break;
         }
         case SHOULDER:{
             node_dir = SHOULDER_DIR;
-            node_pwm = SHOULDER_PWM;
-            protectionSwitch[node] = true; 
-           // nh.logwarn("SHOULDER");           
+            node_pwm = SHOULDER_PWM;         
             break;
         }
         case HIP:{
            
             node_dir = HIP_DIR;
             node_pwm = HIP_PWM;
-            protectionSwitch[node] = true; 
-            //nh.logwarn("HIP");
             break;
         }
         default: {
-            //nh.logwarn("ASS");
             break;
         }
      }
-    if ((error < INIT)) {       
+    if ((targetPose[node] < 256)) {       
         // pin config for cw rotation
         digitalWrite(node_dir, HIGH);
-        error = -error;  
-           
+        target_PWM = -targetPose[node];            
     }
-    else{
+    else {
         // pin config for ccw rotation
         digitalWrite(node_dir, LOW);
+        target_PWM = targetPose[node];
     }
-    
-    errorAccumulator[node][errorParse++] = int(error);
-
-    if (errorParse == ACCUM_FULL) {
-        errorParse = INIT;
-    }
-    
-
-    target_PWM = (int)(Kp*error) + Ki*arraySum(errorAccumulator[WRIST]);
-    analogWrite(node_pwm, target_PWM);
-            
+     analogWrite(node_pwm, target_PWM);         
 }
 
 

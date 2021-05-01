@@ -8,6 +8,7 @@
 int main(int argc, char **argv){
     ros::init(argc, argv, "excavator_hw_interface");
     ros::NodeHandle nh;
+    
     Excavator robot(nh);
  
     controller_manager::ControllerManager cm(&robot);

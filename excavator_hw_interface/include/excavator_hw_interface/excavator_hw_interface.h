@@ -20,11 +20,11 @@ class Excavator : public hardware_interface::RobotHW {
         hardware_interface::VelocityJointInterface  jnt_vel_interface;
         hardware_interface::EffortJointInterface    jnt_eff_interface;
 
-        const char   joint_hex_id[4] = {'T','C','P','D'};
-        const uint16_t joint_zero[4] = {2000,2000,2000,2000};
-        double pos_cmd[4];
-        double vel_cmd[4];
-        double eff_cmd[4];
+        const char   joint_hex_id[4] = {'T','C','P','D'};      // NEEDS UPDATED
+        const uint16_t joint_zero[4] = {2000,2000,2000,2000};  // NEEDS UPDATED
+        double pos_cmd[4]; // Initial Conditions?
+        double vel_cmd[4]; // Initial Conditions?
+        double eff_cmd[4]; // Initial Conditions?
         double pos[4];
         double vel[4];
         double eff[4];
@@ -41,7 +41,7 @@ class Excavator : public hardware_interface::RobotHW {
             #define RMC_max_effort           255
             #define RMC_TwoPi      6.28318530718
 
-            current_pose_subscriber = nh_.subscribe("arm_goal", 10, &Excavator::pose_callback, this);
+            current_pose_subscriber = nh_.subscribe("arm_pose", 10, &Excavator::pose_callback, this);
             target_pose_publisher   = nh_.advertise<arm_handler::arm_msg>("arm_goal", 1000);
             
             hardware_interface::JointStateHandle state_handle_waist(    "waist",    &pos[0], &vel[0], &eff[0]);

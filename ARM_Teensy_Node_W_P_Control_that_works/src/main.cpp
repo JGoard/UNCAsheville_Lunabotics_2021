@@ -41,9 +41,9 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
   RS485Transmit_Addr(); // Includes Transmitting Code.
   RS485Receive_Pos(); //Receiving code for absolute encoders
 
-     if(armSafe){ //Allows PI_Control of arm to function only if over current fault isn't set in monitorarmCurrent();
+     if(armSafe){ //Allows ROS_controller to function only if over current fault isn't set in monitorarmCurrent();
 
-        for(int joint = WRIST; joint<=HIP; joint++) PI_control(joint);
+        for(int joint = WRIST; joint<=HIP; joint++) ROS_controller(joint);
 
     } 
 

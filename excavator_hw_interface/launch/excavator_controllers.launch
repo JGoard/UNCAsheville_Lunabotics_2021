@@ -7,7 +7,7 @@
   <node name="hardware_interface"  pkg="excavator_hw_interface" type="excavator_hw_interface_node" output="screen"/>
 
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
-                    args="/excavator_position_controller
+                    args="/excavator_velocity_controller
                           /joint_state_controller
                     "/>
     <!--args="
