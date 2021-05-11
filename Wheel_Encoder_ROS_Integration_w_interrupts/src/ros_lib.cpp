@@ -44,30 +44,20 @@ void ros_init(void){
 void leftdrive_callback(const std_msgs::Float32 &left_drive_goal){
 	int	PWM_Value = int (left_drive_goal.data*180);
 
-
-
 	if(left_drive_goal.data < 0){
 		digitalWrite(LEFT_SIDE_DIR, HIGH);
 		PWM_Value = abs(PWM_Value);
-		analogWrite(FL_MOTOR_PWM, PWM_Value);
-		analogWrite(ML_MOTOR_PWM, PWM_Value);
-		analogWrite(BL_MOTOR_PWM, PWM_Value);
+		analogWrite(L_MOTOR_PWM, PWM_Value);
   
 	}
 
 	if(left_drive_goal.data > 0){
 		digitalWrite(LEFT_SIDE_DIR, LOW);
-		analogWrite(FL_MOTOR_PWM, PWM_Value);
-		analogWrite(ML_MOTOR_PWM, PWM_Value);
-		analogWrite(BL_MOTOR_PWM, PWM_Value);
-
+		analogWrite(L_MOTOR_PWM, PWM_Value);
 	}
 
 	if(left_drive_goal.data == 0){
-		analogWrite(FL_MOTOR_PWM,0);
-		analogWrite(ML_MOTOR_PWM, 0);
-		analogWrite(BL_MOTOR_PWM, 0);
-
+		analogWrite(L_MOTOR_PWM,0);
 	}
 
 
@@ -80,25 +70,16 @@ void rightdrive_callback(const std_msgs::Float32 &right_drive_goal){
 	if(right_drive_goal.data < 0){
 		digitalWrite(RIGHT_SIDE_DIR, LOW);
 		PWM_Value = abs(PWM_Value);
-		analogWrite(FR_MOTOR_PWM, PWM_Value);
-		analogWrite(MR_MOTOR_PWM, PWM_Value);
-		analogWrite(BR_MOTOR_PWM, PWM_Value);
-  
+		analogWrite(R_MOTOR_PWM, PWM_Value);
 	}
 
 	if(right_drive_goal.data > 0){
 		digitalWrite(RIGHT_SIDE_DIR, HIGH);
-		analogWrite(FR_MOTOR_PWM, PWM_Value);
-		analogWrite(MR_MOTOR_PWM, PWM_Value);
-		analogWrite(BR_MOTOR_PWM, PWM_Value);
-
+		analogWrite(R_MOTOR_PWM, PWM_Value);
 	}
 
 	if(right_drive_goal.data == 0){
-		analogWrite(FR_MOTOR_PWM,0);
-		analogWrite(MR_MOTOR_PWM, 0);
-		analogWrite(BR_MOTOR_PWM, 0);
-
+		analogWrite(R_MOTOR_PWM,0);
 	}
 
 
