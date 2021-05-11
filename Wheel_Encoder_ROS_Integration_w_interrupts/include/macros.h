@@ -10,9 +10,9 @@
 #define LEFT_SIDE_DIR 34
 
 
-#define FL_HALL_CHANNEL 2
+#define L_HALL_CHANNEL 2
 
-#define FL_MOTOR_PWM 10
+#define L_MOTOR_PWM 10
 #define FL_CURRENTSENSE 24
 
 //////////////
@@ -39,9 +39,9 @@
 #define RIGHT_SIDE_DIR 0
 
 
-#define FR_HALL_CHANNEL 3
+#define R_HALL_CHANNEL 3
 
-#define FR_MOTOR_PWM 8
+#define R_MOTOR_PWM 8
 #define FR_CURRENTSENSE 
 
 //////////////
