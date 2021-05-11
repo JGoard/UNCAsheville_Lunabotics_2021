@@ -1,0 +1,10 @@
+<launch>
+    <include file="$(find ds4_driver)/launch/ds4_driver.launch"/>
+
+    <node name="ds4_drive_handler" pkg="drive_handler" type="drive_teleop.py"/>
+
+    <node name="drive_serial" pkg="rosserial_python" type="serial_node.py">
+        <param name="port" value="/dev/ttyACM0"/>
+        <param name="baud" value="57600"/>
+    </node>
+</launch>
